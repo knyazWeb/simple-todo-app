@@ -1,0 +1,58 @@
+
+
+.label {
+  height: fit-content;
+  outline: none;
+  line-height: 0;
+}
+
+.blind_input[type="checkbox"] {
+  position: absolute;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  overflow: hidden;
+  outline: none;
+  white-space: nowrap;
+}
+
+.checkbox {
+  position: relative;
+  border: 1px solid black;
+  display: inline-block;
+  background-color: whitesmoke;
+  transition: background-color 0.2s ease-in-out, border 0.2s linear;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  cursor: pointer;
+  svg {
+    opacity: 0;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    transition: opacity 0.2s ease-in-out;
+  }
+}
+
+.checkbox-active {
+  background-color: #f8cabc;
+  border: 1px solid black;
+  svg {
+    opacity: 1;
+  }
+}
+
+.disabled {
+  background: transparent;
+  svg {
+    opacity: 1;
+    path {
+      stroke: black;
+    }
+  }
+}
+
