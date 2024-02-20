@@ -1,14 +1,11 @@
-import Checkbox from "./components/ui/inputs/checkbox/Checkbox"
-
-
+import RegistrationForm from './components/forms/RegistrationForm/RegistrationForm';
 
 function App() {
-
   return (
-    <div>
-      <Checkbox />
+    <div className="h-dvh flex justify-center items-center">
+      <RegistrationForm />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
