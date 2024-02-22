@@ -8,7 +8,7 @@ type ButtonIconProps = {
 
 const ButtonIcon = ({children, type, onClick}: ButtonIconProps) => {
   return (
-    <button type={type} onClick={onClick} className='w-9 h-9 flex justify-center items-center bg-gray-300 rounded-lg'>
+    <button type={type} onClick={onClick} className='w-9 h-9 flex justify-center items-center bg-gray-200 rounded-lg'>
       {children}
     </button>
   )
