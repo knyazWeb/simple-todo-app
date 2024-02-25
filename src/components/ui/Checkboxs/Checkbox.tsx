@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import css from './Checkbox.module.scss'
+import css from './checkbox.module.scss'
 import cx from 'classnames'
 import Checksvg from './check.svg';
 import { UseFormRegisterReturn } from "react-hook-form";
@@ -16,7 +16,6 @@ type CheckboxProps = {
 
 const Checkbox = React.memo(({ register, errorMessage, children, isRequired, isDisabled, clearErrors }: CheckboxProps) => {
   const [isChecked, setIsChecked] = useState<boolean>(false);
-  console.log(errorMessage)
   return (
     <label className={`flex items-center text-gray-400 ${css.label}`}>
       <input

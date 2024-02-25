@@ -5,9 +5,9 @@ import { IoIosArrowBack } from "react-icons/io";
 const Registration = () => {
 
   return (
-    <div className="h-dvh flex flex-col justify-start items-center w-full max-w-64 mx-auto mt-12">
+    <div className="h-dvh flex flex-col justify-start items-center w-full">
       <div className="w-full mb-7">
-        <ButtonIcon type="button">
+        <ButtonIcon type="button" color='bg-gray-200' borderRadius='rounded-lg'>
           <IoIosArrowBack size={25} />
         </ButtonIcon>
       </div>
