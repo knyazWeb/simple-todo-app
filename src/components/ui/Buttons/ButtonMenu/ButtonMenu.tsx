@@ -1,4 +1,4 @@
-import { ButtonType } from "../ButtonTypes.ts";
+import { ButtonType } from "../ButtonType.ts";
 
 type ButtonMenuProps = {
   children: React.ReactNode;

@@ -22,7 +22,7 @@ const RegistrationForm = () => {
   } = useForm<RegistrationForm>({
     defaultValues: {},
   });
-  // @ts-ignore
+
   const submit: SubmitHandler<RegistrationForm> = (data) => {
     navigate("/home");
   };
@@ -31,7 +31,7 @@ const RegistrationForm = () => {
   return (
     <form
       onSubmit={handleSubmit(submit, error)}
-      className="flex justify-center items-start w-full max-w-64 flex-col gap-5">
+      className="flex justify-center items-start w-full max-w-64 flex-col gap-5 text-">
       <Input
         type="text"
         placeholder="Name"
@@ -70,6 +70,7 @@ const RegistrationForm = () => {
         })}
       />
       {errors.password && <p className="text-xs text-red-400">{errors.password.message}</p>}
+      {/*TODO FIX PROBLEM IN SAFARI*/}
       <Checkbox
         clearErrors={() => clearErrors("checkbox")}
         errorMessage={errors.checkbox?.message}

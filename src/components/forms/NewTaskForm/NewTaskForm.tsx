@@ -1,35 +1,41 @@
-import { useForm } from "react-hook-form";
+import { SubmitErrorHandler, SubmitHandler, useForm } from "react-hook-form";
 import ButtonMain from "../../ui/Buttons/ButtonMain/ButtonMain";
 import Input from "../../ui/Input/Input";
 import Textarea from "../../ui/Textarea/Textarea";
 import { useNavigate } from "react-router-dom";
-
-type NewTaskForm = {
-  title: string;
-  date: string;
-  text: string;
-};
+import { useAppDispatch } from "../../../hooks/redux";
+import { addTask } from "../../../store/reducers/tasksSlice";
+import { ITask } from "../../../store/types/store.types";
 
 const NewTaskForm = () => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<NewTaskForm>({
+  } = useForm<ITask>({
     defaultValues: {
+      id: new Date().getTime(),
       date: new Date().toISOString().split("T")[0],
+      status: "pending",
     },
   });
 
-  // @ts-ignore
-  const submit: SubmitHandler<NewTaskForm> = (data) => {
-    navigate('/home')
-  };
-  // @ts-ignore
-  const error: SubmitErrorHandler<NewTaskForm> = (data) => {
+  const submit: SubmitHandler<ITask> = (data) => {
+    const task: ITask = {
+      id: data.id,
+      date: data.date,
+      title: data.title,
+      description: data.description,
+      status: data.status,
+    };
+    dispatch(addTask(task));
+    navigate("/home");
   };
 
+  const error: SubmitErrorHandler<ITask> = (data) => {};
   return (
     <form
       className="flex justify-center items-start w-full max-w-64 flex-col gap-5"
@@ -44,16 +50,27 @@ const NewTaskForm = () => {
         })}
       />
       {errors.title && <p className="text-xs text-red-400">{errors.title.message}</p>}
-      <Input type="date" style={{ color: "rgb(64 64 64)" }} {...register("date")} />
+      <Input
+        type="date"
+        style={{ color: "rgb(64 64 64)" }}
+        {...register("date", {
+          required: "Choose a date",
+          validate: (value) => {
+            const currentYear = value.split("-")[0];
+            return (currentYear.length === 4 && +currentYear[0] === 2) || "Choose a correct date";
+          },
+        })}
+      />
+      {errors.date && <p className="text-xs text-red-400">{errors.date.message}</p>}
       <Textarea
         placeholder="Add your task details"
-        {...register("text", {
+        {...register("description", {
           validate: (value) => {
             return !!value.trim() || "Title field is empty";
           },
         })}
       />
-      {errors.text && <p className="text-xs text-red-400">{errors.text.message}</p>}
+      {errors.description && <p className="text-xs text-red-400">{errors.description.message}</p>}
       <ButtonMain className="mt-7" type="submit" disabled={false}>
         Create task
       </ButtonMain>

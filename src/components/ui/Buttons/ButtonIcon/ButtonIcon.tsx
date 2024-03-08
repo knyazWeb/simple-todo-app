@@ -1,4 +1,4 @@
-import { ButtonType } from '../ButtonTypes';
+import { ButtonType } from "../ButtonType.ts";
 
 type ButtonIconProps = {
   children: React.ReactNode;
@@ -8,12 +8,15 @@ type ButtonIconProps = {
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
-const ButtonIcon = ({children, type, color, borderRadius, onClick}: ButtonIconProps) => {
+const ButtonIcon = ({ children, type, color, borderRadius, onClick }: ButtonIconProps) => {
   return (
-    <button type={type} onClick={onClick} className={`w-9 h-9 flex justify-center items-center ${color} ${borderRadius}`}>
+    <button
+      type={type}
+      onClick={onClick}
+      className={`w-9 h-9 flex justify-center items-center ${color} ${borderRadius}`}>
       {children}
     </button>
-  )
-}
+  );
+};
 
-export default ButtonIcon
+export default ButtonIcon;
