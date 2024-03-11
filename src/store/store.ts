@@ -1,29 +1,18 @@
-import {combineReducers, configureStore} from "@reduxjs/toolkit";
-import { persistStore, persistReducer } from "redux-persist";
-import storage from "redux-persist/lib/storage"; 
+import { configureStore } from "@reduxjs/toolkit";
+
 import tasksSlice from "./reducers/tasksSlice";
+import { tasksApi } from "../services/TasksService";
 
-
-const rootReducer = combineReducers({
-  tasks: tasksSlice,
+const store = configureStore({
+  reducer: {
+    tasks: tasksSlice,
+    [tasksApi.reducerPath]: tasksApi.reducer,
+  },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(tasksApi.middleware),
 });
 
-const persistConfig = {
-  key: "root",
-  storage,
-};
+export type RootState = ReturnType<typeof store.getState>;
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
-
-const store =  configureStore({
-  reducer: persistedReducer
-})
-
-
-export const persistor = persistStore(store);
-
-export type RootState = ReturnType<typeof store.getState>
-
-export type AppDispatch = typeof store.dispatch
+export type AppDispatch = typeof store.dispatch;
 
 export default store;

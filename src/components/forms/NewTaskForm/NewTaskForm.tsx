@@ -10,7 +10,6 @@ import { ITask } from "../../../store/types/store.types";
 const NewTaskForm = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
   const {
     register,
     handleSubmit,
