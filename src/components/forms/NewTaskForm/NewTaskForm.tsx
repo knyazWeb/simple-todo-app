@@ -3,38 +3,37 @@ import ButtonMain from "../../ui/Buttons/ButtonMain/ButtonMain";
 import Input from "../../ui/Input/Input";
 import Textarea from "../../ui/Textarea/Textarea";
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../../../hooks/redux";
-import { addTask } from "../../../store/reducers/tasksSlice";
 import { ITask } from "../../../store/types/store.types";
+import { useAddTaskMutation, useGetTasksQuery } from "../../../services/TasksService.ts";
 
 const NewTaskForm = () => {
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const [addTask, {isLoading, isError}] = useAddTaskMutation()
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<ITask>({
     defaultValues: {
-      id: new Date().getTime(),
       date: new Date().toISOString().split("T")[0],
-      status: "pending",
+      status: "In progress",
     },
   });
 
-  const submit: SubmitHandler<ITask> = (data) => {
-    const task: ITask = {
-      id: data.id,
+  const submit: SubmitHandler<ITask> = async (data) => {
+    const task = {
       date: data.date,
       title: data.title,
       description: data.description,
       status: data.status,
     };
-    dispatch(addTask(task));
+    await addTask(task as ITask)
     navigate("/home");
+
   };
 
-  const error: SubmitErrorHandler<ITask> = (data) => {};
+  const error: SubmitErrorHandler<ITask> = (data) => {
+  };
   return (
     <form
       className="flex justify-center items-start w-full max-w-64 flex-col gap-5"
@@ -71,7 +70,7 @@ const NewTaskForm = () => {
       />
       {errors.description && <p className="text-xs text-red-400">{errors.description.message}</p>}
       <ButtonMain className="mt-7" type="submit" disabled={false}>
-        Create task
+        {(isLoading) ? 'Loading' : 'Create task' }
       </ButtonMain>
     </form>
   );

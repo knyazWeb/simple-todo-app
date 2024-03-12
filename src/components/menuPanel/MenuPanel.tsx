@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 
 const MenuPanel = () => {
-
+  
   const navigate = useNavigate()
 
   return (
