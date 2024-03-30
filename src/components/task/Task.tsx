@@ -3,7 +3,7 @@ import { MdDelete, MdOutlineDone } from "react-icons/md";
 import { useEffect, useRef, useState } from "react";
 
 type TaskProps = {
-  id: number;
+  id: string;
   title: string;
   description: string;
   date: string;
@@ -19,14 +19,13 @@ const Task = ({ id, title, description, date, status }: TaskProps) => {
   const [descriptionValue, setDescriptionValue] = useState(description);
   const titleInputRef = useRef<HTMLInputElement>(null);
   const descriptionInputRef = useRef<HTMLInputElement>(null);
-  
-  // TODO: РЕШИТЬ ПРОБЛЕМЫ С ПЕРЕХОДОМ ОТ description к title инпутам 
+
   useEffect(() => {
     if (isEditingTitle && titleInputRef.current) {
-      titleInputRef.current.focus();
+      return titleInputRef.current.focus();
     }
     if (isEditingDescription && descriptionInputRef.current) {
-      descriptionInputRef.current.focus();
+      return descriptionInputRef.current.focus();
     }
   }, [isEditingTitle, isEditingDescription]);
 
@@ -42,15 +41,13 @@ const Task = ({ id, title, description, date, status }: TaskProps) => {
           ref={titleInputRef}
           value={titleValue}
           onChange={(e) => setTitleValue(e.target.value)}
-          onBlur={() =>
-            setTimeout(() => {
-              setIsEditingTitle(false);
-              titleValue.trim() === "" && setTitleValue(title);
-            }, 300)
-          }
+          onBlur={() => {
+            setIsEditingTitle(false);
+            titleValue.trim() === "" && setTitleValue(title);
+          }}
         />
       ) : (
-        <h2 onClick={() => setIsEditingTitle(true)} className="text-xl">
+        <h2 onClick={(e) => setIsEditingTitle(true)} className="text-xl">
           {titleValue}
         </h2>
       )}
@@ -59,14 +56,13 @@ const Task = ({ id, title, description, date, status }: TaskProps) => {
           ref={descriptionInputRef}
           value={descriptionValue}
           onChange={(e) => setDescriptionValue(e.target.value)}
-          onBlur={() =>
-            setTimeout(() => {
-              setIsEditingDescription(false);
-              descriptionValue.trim() === "" && setDescriptionValue(description);
-            }, 300)}
+          onBlur={() => {
+            setIsEditingDescription(false);
+            descriptionValue.trim() === "" && setDescriptionValue(description);
+          }}
         />
       ) : (
-        <p onClick={() => setIsEditingDescription(true)} className="text-base text-gray-600">
+        <p onClick={(e) => setIsEditingDescription(true)} className="text-base text-gray-600">
           {descriptionValue}
         </p>
       )}

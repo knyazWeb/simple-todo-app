@@ -3,37 +3,44 @@ import { ITask } from "../store/types/store.types";
 
 export const tasksApi = createApi({
   reducerPath: "tasksApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000" }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: "https://todo-typescript-9f6f9-default-rtdb.europe-west1.firebasedatabase.app",
+  }),
   tagTypes: ["Task"],
   endpoints: (builder) => ({
     getTasks: builder.query<ITask[], void>({
-      query: () => "/tasks",
+      query: () => "/tasks.json",
       providesTags: ["Task"],
+      transformResponse: (response: { [key: string]: ITask }) => {
+        return response ? Object.keys(response).map((key) => ({
+              ...response[key],
+              id: key,
+            })) : [];
+      },
     }),
     addTask: builder.mutation<ITask, ITask>({
       query: (newTask) => ({
-        url: "/tasks",
+        url: "/tasks.json",
         method: "POST",
         body: newTask,
       }),
       invalidatesTags: ["Task"],
     }),
-    removeTask: builder.mutation<void, number>({
+    removeTask: builder.mutation<void, string>({
       query: (id) => ({
-        url: `/tasks/${id}`,
+        url: `/tasks/${id}.json`,
         method: "DELETE",
       }),
       invalidatesTags: ["Task"],
     }),
     changeTask: builder.mutation<void, ITask>({
       query: (task) => ({
-        url: `/tasks/${task.id}`,
+        url: `/tasks/${task.id}.json`,
         method: "PUT",
         body: task,
       }),
       invalidatesTags: ["Task"],
     }),
-
   }),
 });
 

@@ -4,7 +4,6 @@ import Task from "../../components/task/Task.tsx";
 
 const Home = () => {
   const { data, error, isLoading } = useGetTasksQuery();
-
   return (
     <>
       <div className="w-full pb-16">
