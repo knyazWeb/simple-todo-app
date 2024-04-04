@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { SubmitErrorHandler, SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../../../hooks/redux.ts";
+import { useAppSelector } from "../../../hooks/redux.ts";
 import { useSignUpMutation, useUpdateNameMutation } from "../../../services/AuthService.ts";
-import { login } from "../../../store/reducers/authSlice.ts";
+import { selectUser } from "../../../store/reducers/authSlice.ts";
 import ButtonMain from "../../ui/Buttons/ButtonMain/ButtonMain";
 import Checkbox from "../../ui/Checkboxs/Checkbox.tsx";
 import Input from "../../ui/Input/Input.tsx";
@@ -18,30 +18,23 @@ type RegistrationForm = {
 
 const RegistrationForm = () => {
   const navigate = useNavigate();
-
-  const dispatch = useAppDispatch();
-
   const [userName, setUserName] = useState("");
+  const {user, isAuth} = useAppSelector(selectUser);
 
   const [signUp, { data: responseData, isLoading, isSuccess }] = useSignUpMutation();
-
-  const [updateName, { data: responseDataWithName }] = useUpdateNameMutation();
+  const [updateName] = useUpdateNameMutation();
 
   useEffect(() => {
     if (isSuccess && responseData) {
-      localStorage.setItem("token", responseData.idToken);
-      localStorage.setItem("refreshToken", responseData.refreshToken);
       updateName({ name: userName, idToken: responseData.idToken });
     }
   }, [isSuccess, responseData]);
 
   useEffect(() => {
-    if (responseDataWithName) {
-      //TODO: переписать если возможно через extraReducer
-      dispatch(login({ user: responseDataWithName.displayName, isAuth: true }));
+    if (user && isAuth) {
       navigate("/");
     }
-  }, [responseDataWithName]);
+  }, [user, isAuth]);
 
   const {
     register,
@@ -104,7 +97,7 @@ const RegistrationForm = () => {
         })}
       />
       {errors.password && <p className="text-xs text-red-400">{errors.password.message}</p>}
-      {/*TODO FIX PROBLEM IN SAFARI*/}
+      {/*TODO: FIX PROBLEM IN SAFARI (Checkbox багуется)  */}
       <Checkbox
         clearErrors={() => clearErrors("checkbox")}
         errorMessage={errors.checkbox?.message}

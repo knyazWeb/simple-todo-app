@@ -1,6 +1,15 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
+import { baseQueryWithReauth } from "./ApiService";
 
 const API_key = import.meta.env.VITE_API_KEY;
+
+type UserResponseType = {
+  users: {
+    email: string;
+    displayName: string;
+    localId: string;
+  }[];
+};
 
 interface signUpCredentials {
   idToken: string;
@@ -19,7 +28,7 @@ interface signUpCredentialsWithName {
 
 export const authApi = createApi({
   reducerPath: "authApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "https://identitytoolkit.googleapis.com/v1" }),
+  baseQuery: baseQueryWithReauth,
   tagTypes: ["Auth"],
   endpoints: (builder) => ({
     signUp: builder.mutation<signUpCredentials, { email: string; password: string }>({
@@ -44,12 +53,12 @@ export const authApi = createApi({
         },
       }),
     }),
-    verifyToken: builder.query<{ users: any[] }, string>({
-      query: (idToken) => ({
+    getUser: builder.query< UserResponseType , string>({
+      query: (token) => ({
         url: `/accounts:lookup?key=${API_key}`,
         method: "POST",
         body: {
-          idToken: idToken,
+          idToken: token,
         },
       }),
     }),
@@ -67,4 +76,4 @@ export const authApi = createApi({
   }),
 });
 
-export const { useSignUpMutation, useSignInMutation, useUpdateNameMutation, useVerifyTokenQuery } = authApi;
+export const { useSignUpMutation, useSignInMutation, useUpdateNameMutation, useGetUserQuery } = authApi;

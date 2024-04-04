@@ -1,44 +1,53 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
 import { ITask } from "../store/types/store.types";
+import { baseQueryWithAuthReauth } from "./ApiService";
 
 export const tasksApi = createApi({
   reducerPath: "tasksApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: "https://todo-typescript-9f6f9-default-rtdb.europe-west1.firebasedatabase.app",
-  }),
+  baseQuery: baseQueryWithAuthReauth,
   tagTypes: ["Task"],
   endpoints: (builder) => ({
-    getTasks: builder.query<ITask[], void>({
-      query: () => "/tasks.json",
-      providesTags: ["Task"],
-      transformResponse: (response: { [key: string]: ITask }) => {
-        return response ? Object.keys(response).map((key) => ({
-              ...response[key],
-              id: key,
-            })) : [];
+    getTasks: builder.query<{ [key: string]: ITask }, string | null>({
+      query: (userId) => {
+        const token = localStorage.getItem("token");
+        return {
+          url: `tasks/${userId}.json?auth=${token}`,
+          method: "GET",
+        };
       },
+      providesTags: ["Task"],
     }),
-    addTask: builder.mutation<ITask, ITask>({
-      query: (newTask) => ({
-        url: "/tasks.json",
-        method: "POST",
-        body: newTask,
-      }),
+    addTask: builder.mutation<ITask, { newTask: ITask; userId: string }>({
+      query: ({ newTask, userId }) => {
+        const token = localStorage.getItem("token");
+
+        return {
+          url: `/tasks/${userId}.json?auth=${token}`,
+          method: "POST",
+          body: newTask,
+        };
+      },
       invalidatesTags: ["Task"],
     }),
-    removeTask: builder.mutation<void, string>({
-      query: (id) => ({
-        url: `/tasks/${id}.json`,
-        method: "DELETE",
-      }),
+    removeTask: builder.mutation<void, { userId: string | null; taskId: string }>({
+      query: ({ userId, taskId }) => {
+        const token = localStorage.getItem("token");
+        return {
+          url: `/tasks/${userId}/${taskId}.json?auth=${token}`,
+          method: "DELETE",
+        };
+      },
       invalidatesTags: ["Task"],
     }),
-    changeTask: builder.mutation<void, ITask>({
-      query: (task) => ({
-        url: `/tasks/${task.id}.json`,
-        method: "PUT",
-        body: task,
-      }),
+    changeTask: builder.mutation<void, { userId: string | null; taskId: string; task: ITask }>({
+      query: ({ userId, taskId, task }) => {
+        const token = localStorage.getItem("token");
+        return {
+          url: `/tasks/${userId}/${taskId}.json?auth=${token}`,
+          method: "PATCH",
+          body: task,
+        };
+      },
       invalidatesTags: ["Task"],
     }),
   }),

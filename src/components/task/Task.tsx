@@ -1,6 +1,8 @@
 import { useChangeTaskMutation, useRemoveTaskMutation } from "../../services/TasksService.ts";
 import { MdDelete, MdOutlineDone } from "react-icons/md";
 import { useEffect, useRef, useState } from "react";
+import { useAppSelector } from "../../hooks/redux.ts";
+import { selectUser } from "../../store/reducers/authSlice.ts";
 
 type TaskProps = {
   id: string;
@@ -12,6 +14,7 @@ type TaskProps = {
 
 const Task = ({ id, title, description, date, status }: TaskProps) => {
   const [removeTask] = useRemoveTaskMutation();
+  const { userId } = useAppSelector(selectUser);
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [isEditingDescription, setIsEditingDescription] = useState(false);
   const [changeTask] = useChangeTaskMutation();
@@ -31,7 +34,7 @@ const Task = ({ id, title, description, date, status }: TaskProps) => {
 
   const saveInputHandler = async () => {
     if (titleValue.trim() !== "" && descriptionValue.trim() !== "") {
-      await changeTask({ id, title: titleValue, description: descriptionValue, date, status });
+      await changeTask({userId, taskId: id, task: { id, title: titleValue, description: descriptionValue, date, status }});
     }
   };
   return (
@@ -80,7 +83,7 @@ const Task = ({ id, title, description, date, status }: TaskProps) => {
         )}
 
         <MdDelete
-          onClick={() => removeTask(id)}
+          onClick={() => removeTask({userId, taskId: id})}
           size={25}
           className="text-red-600 cursor-pointer hover:text-red-800 transition-all duration-300 ease-in-out"
         />

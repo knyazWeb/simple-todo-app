@@ -25,8 +25,6 @@ const LoginForm = () => {
 
   useEffect(() => {
     if (isSuccess && responseData) {
-      localStorage.setItem("token", responseData.idToken);
-      localStorage.setItem("refreshToken", responseData.refreshToken);
       navigate("/");
     }
   }, [isSuccess, responseData]);

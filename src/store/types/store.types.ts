@@ -9,4 +9,5 @@ export interface ITask {
 export interface IUserAuth {
   user: string | null;
   isAuth: boolean;
+  userId: string | null;
 }
