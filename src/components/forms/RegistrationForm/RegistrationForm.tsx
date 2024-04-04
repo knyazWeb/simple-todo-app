@@ -1,9 +1,13 @@
+import { useEffect, useState } from "react";
 import { SubmitErrorHandler, SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "../../../hooks/redux.ts";
+import { useSignUpMutation, useUpdateNameMutation } from "../../../services/AuthService.ts";
+import { selectUser } from "../../../store/reducers/authSlice.ts";
 import ButtonMain from "../../ui/Buttons/ButtonMain/ButtonMain";
 import Checkbox from "../../ui/Checkboxs/Checkbox.tsx";
 import Input from "../../ui/Input/Input.tsx";
-import { regExpEmail } from "./regExpEmail";
+import { regExpEmail } from "../regExpEmail.ts";
 
 type RegistrationForm = {
   name: string;
@@ -14,6 +18,24 @@ type RegistrationForm = {
 
 const RegistrationForm = () => {
   const navigate = useNavigate();
+  const [userName, setUserName] = useState("");
+  const {user, isAuth} = useAppSelector(selectUser);
+
+  const [signUp, { data: responseData, isLoading, isSuccess }] = useSignUpMutation();
+  const [updateName] = useUpdateNameMutation();
+
+  useEffect(() => {
+    if (isSuccess && responseData) {
+      updateName({ name: userName, idToken: responseData.idToken });
+    }
+  }, [isSuccess, responseData]);
+
+  useEffect(() => {
+    if (user && isAuth) {
+      navigate("/");
+    }
+  }, [user, isAuth]);
+
   const {
     register,
     handleSubmit,
@@ -23,8 +45,13 @@ const RegistrationForm = () => {
     defaultValues: {},
   });
 
-  const submit: SubmitHandler<RegistrationForm> = (data) => {
-    navigate("/home");
+  const submit: SubmitHandler<RegistrationForm> = async (data) => {
+    const user = {
+      email: data.email,
+      password: data.password,
+    };
+    setUserName(data.name);
+    await signUp(user);
   };
   // @ts-ignore
   const error: SubmitErrorHandler<RegistrationForm> = (data) => {};
@@ -70,15 +97,15 @@ const RegistrationForm = () => {
         })}
       />
       {errors.password && <p className="text-xs text-red-400">{errors.password.message}</p>}
-      {/*TODO FIX PROBLEM IN SAFARI*/}
+      {/*TODO: FIX PROBLEM IN SAFARI (Checkbox багуется)  */}
       <Checkbox
         clearErrors={() => clearErrors("checkbox")}
         errorMessage={errors.checkbox?.message}
         register={register("checkbox", { required: "Accept" })}>
         <span className="ml-3 text-sm cursor-pointer underline">I agree to privacy policy & terms</span>{" "}
       </Checkbox>
-      <ButtonMain className="mt-7" type="submit" disabled={false}>
-        Submit
+      <ButtonMain className="mt-5" type="submit" disabled={false}>
+        {isLoading ? "Loading..." : "Sign up"}
       </ButtonMain>
     </form>
   );

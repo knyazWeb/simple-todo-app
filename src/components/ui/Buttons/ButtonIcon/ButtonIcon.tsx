@@ -5,12 +5,14 @@ type ButtonIconProps = {
   type: ButtonType;
   color: string;
   borderRadius: string;
+  disabled?: boolean;
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
-const ButtonIcon = ({ children, type, color, borderRadius, onClick }: ButtonIconProps) => {
+const ButtonIcon = ({ children, type, color, borderRadius, disabled, onClick }: ButtonIconProps) => {
   return (
     <button
+      disabled={disabled}
       type={type}
       onClick={onClick}
       className={`w-9 h-9 flex justify-center items-center ${color} ${borderRadius}`}>

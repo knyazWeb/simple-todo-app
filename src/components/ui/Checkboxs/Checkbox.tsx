@@ -16,7 +16,6 @@ type CheckboxProps = {
 const Checkbox = React.memo(
   ({ register, errorMessage, children, isRequired, isDisabled, clearErrors }: CheckboxProps) => {
     const [isChecked, setIsChecked] = useState<boolean>(false);
-    console.log(isChecked);
     return (
       <label className={`flex items-center text-gray-400 ${css.label}`}>
         <input
