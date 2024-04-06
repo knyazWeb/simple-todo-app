@@ -10,7 +10,7 @@ import { selectUser } from "../../../store/reducers/authSlice.ts";
 
 const NewTaskForm = () => {
   const navigate = useNavigate();
-  const [addTask, { isLoading, isError }] = useAddTaskMutation();
+  const [addTask, { isLoading }] = useAddTaskMutation();
   const { userId } = useAppSelector(selectUser);
   const {
     register,

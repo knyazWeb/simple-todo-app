@@ -15,7 +15,7 @@ const ButtonIcon = ({ children, type, color, borderRadius, disabled, onClick }: 
       disabled={disabled}
       type={type}
       onClick={onClick}
-      className={`w-9 h-9 flex justify-center items-center ${color} ${borderRadius}`}>
+      className={`w-9 h-9 flex justify-center items-center ${borderRadius} ${disabled ? 'bg-cyan-900' : color}`}>
       {children}
     </button>
   );
