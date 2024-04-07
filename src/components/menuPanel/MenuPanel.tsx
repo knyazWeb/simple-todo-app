@@ -6,6 +6,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../hooks/redux.ts";
 import { logout } from "../../store/reducers/authSlice.ts";
 import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
+import { GoHome } from "react-icons/go";
 
 const MenuPanel = () => {
   const navigate = useNavigate();
@@ -22,21 +23,33 @@ const MenuPanel = () => {
           }}
           type="button"
           color="bg-red-400"
+          title="Logout"
           borderRadius="rounded-full">
           <RiLogoutBoxLine color="white" />
         </ButtonIcon>
         <ButtonIcon
           onClick={() => navigate("/createTask")}
           type="button"
+          title="Create task"
           color="bg-red-400"
           disabled={currentLocation.pathname === "/createTask"}
           borderRadius="rounded-full">
           <FaPlus color="white" />
         </ButtonIcon>
         <ButtonIcon
+          onClick={() => navigate("/")}
+          type="button"
+          color="bg-red-400"
+          title="Home"
+          disabled={currentLocation.pathname === "/"}
+          borderRadius="rounded-full">
+          <GoHome size={25} color="white" />
+        </ButtonIcon>
+        <ButtonIcon
           onClick={() => navigate("/completed")}
           type="button"
           color="bg-red-400"
+          title="Completed tasks"
           disabled={currentLocation.pathname === "/completed"}
           borderRadius="rounded-full">
           <IoCheckmarkDoneCircleOutline size={25} color="white" />

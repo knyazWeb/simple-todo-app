@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import Registration from "../pages/registration /Registration.tsx";
 import Login from "../pages/login/Login.tsx";
 import Home from "../pages/home/Home.tsx";
@@ -15,6 +15,7 @@ export const Router = () => (
         <Route index element={<Home />} />
         <Route path="/createTask" element={<NewTask />} />
         <Route path="/completed" element={<Completed />} />
+        <Route path="*" element={<Navigate to="/" />} />
       </Route>
     </Route>
 

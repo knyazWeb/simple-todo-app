@@ -24,7 +24,7 @@ const Checkbox = React.memo(
           {...register}
           type="checkbox"
           required={isRequired}
-          onChange={() => {
+          onClick={() => {
             setIsChecked(!isChecked);
             clearErrors?.();
           }}

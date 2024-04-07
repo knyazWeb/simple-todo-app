@@ -12,7 +12,7 @@ const ButtonMain = ({ type, children, disabled, className, onClick }: ButtonMain
   return (
     <button
       disabled={disabled}
-      className={`max-w-64 w-full text-white rounded-xl py-3.5 px-2 ${className ? className : ""} ${disabled ? "bg-gray-500" : "bg-red-400"} hover:bg-red-500 transition-colors duration-500`}
+      className={` w-full text-white rounded-xl py-3.5 px-2 ${className ? className : ""} ${disabled ? "bg-gray-500" : "bg-red-400"} hover:bg-red-500 transition-colors duration-500`}
       type={type}
       onClick={onClick}>
       {children}

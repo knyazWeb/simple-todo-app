@@ -1,11 +1,11 @@
-import Task from "../../components/task/Task";
+import { IoIosArrowBack } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 import ButtonIcon from "../../components/ui/Buttons/ButtonIcon/ButtonIcon";
 import { useAppSelector } from "../../hooks/redux";
 import { useGetTasksQuery } from "../../services/TasksService";
 import { selectUser } from "../../store/reducers/authSlice";
 import Loading from "../loading/Loading";
-import { useNavigate } from "react-router-dom";
-import { IoIosArrowBack } from "react-icons/io";
+import TaskCompleted from "../../components/tasks/TaskCompleted/TaskCompleted";
 
 const Completed = () => {
   const { isAuth, userId } = useAppSelector(selectUser);
@@ -16,7 +16,7 @@ const Completed = () => {
 
   return (
     <>
-      <div className="w-full pb-16">
+      <div className="w-full pb-20">
         <ButtonIcon onClick={() => navigate("/")} type="button" color="bg-gray-200" borderRadius="rounded-lg">
           <IoIosArrowBack size={25} />
         </ButtonIcon>
@@ -28,7 +28,7 @@ const Completed = () => {
             ? dataTasksKeys.map((key) => {
                 const task = data[key];
                 return (
-                  <Task
+                  <TaskCompleted
                     key={key}
                     id={key}
                     title={task.title}

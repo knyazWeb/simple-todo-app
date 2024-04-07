@@ -1,17 +1,22 @@
-import { useGetTasksQuery } from "../../services/TasksService";
-import Task from "../../components/task/Task.tsx";
+import { Navigate } from "react-router-dom";
+import Task from "../../components/tasks/Task/Task.tsx";
 import { useAppSelector } from "../../hooks/redux.ts";
+import { useGetTasksQuery } from "../../services/TasksService";
 import { selectUser } from "../../store/reducers/authSlice.ts";
 import Loading from "../loading/Loading.tsx";
 
 const Home = () => {
   const { isAuth, userId } = useAppSelector(selectUser);
-  const { data, isLoading } = useGetTasksQuery(userId, { skip: !isAuth });
+  const { data, isLoading, isError } = useGetTasksQuery(userId, { skip: !isAuth });
+  
+  if (!isAuth && isError) {
+    return <Navigate to="/registration" replace />;
+  }
 
   const dataTasksKeys = data && Object.keys(data).filter((key) => data[key].status === "In progress");
   return (
     <>
-      <div className="w-full pb-16">
+      <div className="w-full pb-20">
         <h1 className="text-start text-3xl font-semibold mb-4">Tasks</h1>
         <div className="flex flex-col gap-4">
           {isLoading && <Loading />}

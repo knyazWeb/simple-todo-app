@@ -1,10 +1,10 @@
-import { useChangeTaskMutation, useRemoveTaskMutation } from "../../services/TasksService.ts";
-import { MdDelete, MdOutlineDone } from "react-icons/md";
 import { useEffect, useRef, useState } from "react";
-import { useAppSelector } from "../../hooks/redux.ts";
-import { selectUser } from "../../store/reducers/authSlice.ts";
 import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
-import { ITask } from "../../store/types/store.types.ts";
+import { MdDelete, MdOutlineDone } from "react-icons/md";
+import { useAppSelector } from "../../../hooks/redux.ts";
+import { useChangeTaskMutation, useRemoveTaskMutation } from "../../../services/TasksService.ts";
+import { selectUser } from "../../../store/reducers/authSlice.ts";
+import { ITask } from "../../../store/types/store.types.ts";
 
 type TaskProps = {
   id: string;
@@ -61,7 +61,7 @@ const Task = ({ id, title, description, date, status }: TaskProps) => {
           }}
         />
       ) : (
-        <h2 onClick={(e) => setIsEditingTitle(true)} className="text-xl">
+        <h2 onClick={() => setIsEditingTitle(true)} className="text-xl">
           {titleValue}
         </h2>
       )}
@@ -77,16 +77,16 @@ const Task = ({ id, title, description, date, status }: TaskProps) => {
           }}
         />
       ) : (
-        <p onClick={(e) => setIsEditingDescription(true)} className="text-base text-gray-600">
+        <p onClick={() => setIsEditingDescription(true)} className="text-base text-gray-600">
           {descriptionValue}
         </p>
       )}
-      <p className="text-indigo-900">{date}</p>
-      <p className={status === "In progress" ? "text-green-600" : "text-cyan-700"}>{status}</p>
+      <p className="text-indigo-900 text-sm">{date}</p>
+      <p className={"text-green-600 text-sm font-bold"}>{status}</p>
       <div className="absolute bottom-2 right-2 flex gap-1">
         {(isEditingTitle || isEditingDescription || titleValue !== title || description !== descriptionValue) && (
           <MdOutlineDone
-            onClick={(e) => {
+            onClick={() => {
               (titleValue !== title || descriptionValue !== description) && saveInputHandler();
             }}
             size={25}

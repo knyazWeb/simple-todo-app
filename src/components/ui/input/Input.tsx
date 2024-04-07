@@ -5,7 +5,7 @@ const Input = forwardRef<HTMLInputElement, React.HTMLProps<HTMLInputElement>>((p
   <input
     ref={ref}
     {...props}
-    className={`py-1.5 px-3 w-full max-w-64 text-base rounded-xl border border-solid border-black ${css.shadow}`}
+    className={`py-1.5 px-3 w-full text-base rounded-xl border border-solid border-black ${css.shadow}`}
   />
 ));
 
