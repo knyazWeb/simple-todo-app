@@ -46,7 +46,7 @@ export const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, unkno
       } else {
         localStorage.removeItem("token");
         localStorage.removeItem("refreshToken");
-         redirect("/registration");
+        redirect("/registration");
       }
     }
   }
@@ -76,6 +76,7 @@ export const baseQueryWithAuthReauth: BaseQueryFn<string | FetchArgs, unknown, u
         api,
         extraOptions
       );
+     
       if (refreshResponse.data) {
         const { id_token, refresh_token } = refreshResponse.data as any;
         localStorage.setItem("token", id_token);
@@ -87,7 +88,7 @@ export const baseQueryWithAuthReauth: BaseQueryFn<string | FetchArgs, unknown, u
       } else {
         localStorage.removeItem("token");
         localStorage.removeItem("refreshToken");
-         redirect("/registration");
+        redirect("/registration");
       }
     }
   }

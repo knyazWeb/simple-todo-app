@@ -10,7 +10,7 @@ import { selectUser } from "../../../store/reducers/authSlice.ts";
 
 const NewTaskForm = () => {
   const navigate = useNavigate();
-  const [addTask, { isLoading, isError }] = useAddTaskMutation();
+  const [addTask, { isLoading }] = useAddTaskMutation();
   const { userId } = useAppSelector(selectUser);
   const {
     register,
@@ -38,9 +38,7 @@ const NewTaskForm = () => {
 
   const error: SubmitErrorHandler<ITask> = (data) => {};
   return (
-    <form
-      className="flex justify-center items-start w-full max-w-64 flex-col gap-5"
-      onSubmit={handleSubmit(submit, error)}>
+    <form className="flex justify-center items-start w-full flex-col gap-5" onSubmit={handleSubmit(submit, error)}>
       <Input
         type="text"
         placeholder="Task Title"
@@ -51,6 +49,14 @@ const NewTaskForm = () => {
         })}
       />
       {errors.title && <p className="text-xs text-red-400">{errors.title.message}</p>}
+      <Textarea
+        placeholder="Add your task details"
+        {...register("description", {
+          validate: (value) => {
+            return !!value.trim() || "Title field is empty";
+          },
+        })}
+      />
       <Input
         type="date"
         style={{ color: "rgb(64 64 64)" }}
@@ -63,14 +69,7 @@ const NewTaskForm = () => {
         })}
       />
       {errors.date && <p className="text-xs text-red-400">{errors.date.message}</p>}
-      <Textarea
-        placeholder="Add your task details"
-        {...register("description", {
-          validate: (value) => {
-            return !!value.trim() || "Title field is empty";
-          },
-        })}
-      />
+
       {errors.description && <p className="text-xs text-red-400">{errors.description.message}</p>}
       <ButtonMain className="mt-7" type="submit" disabled={false}>
         {isLoading ? "Loading" : "Create task"}

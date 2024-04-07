@@ -33,10 +33,6 @@ const authSlice = createSlice({
         
       }
     }),
-    builder.addMatcher(authApi.endpoints.updateName.matchFulfilled, (state, action) => {
-      state.user = action.payload.displayName;
-      state.isAuth = true;
-    }),
     builder.addMatcher(authApi.endpoints.getUser.matchFulfilled, (state, action) => {
       if (action.payload.users && action.payload.users.length) {
         state.user = action.payload.users[0].displayName;

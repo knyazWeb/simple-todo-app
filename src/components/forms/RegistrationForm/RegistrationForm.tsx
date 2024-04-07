@@ -19,10 +19,9 @@ type RegistrationForm = {
 const RegistrationForm = () => {
   const navigate = useNavigate();
   const [userName, setUserName] = useState("");
-  const {user, isAuth} = useAppSelector(selectUser);
 
   const [signUp, { data: responseData, isLoading, isSuccess }] = useSignUpMutation();
-  const [updateName] = useUpdateNameMutation();
+  const [updateName, {isSuccess: updateIsSuccess}] = useUpdateNameMutation();
 
   useEffect(() => {
     if (isSuccess && responseData) {
@@ -31,10 +30,10 @@ const RegistrationForm = () => {
   }, [isSuccess, responseData]);
 
   useEffect(() => {
-    if (user && isAuth) {
+    if (updateIsSuccess) {
       navigate("/");
     }
-  }, [user, isAuth]);
+  }, [updateIsSuccess]);
 
   const {
     register,
