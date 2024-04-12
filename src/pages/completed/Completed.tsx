@@ -1,11 +1,11 @@
 import { IoIosArrowBack } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
+import Loading from "../../components/loading/Loading";
+import TaskCompleted from "../../components/tasks/TaskCompleted/TaskCompleted";
 import ButtonIcon from "../../components/ui/Buttons/ButtonIcon/ButtonIcon";
 import { useAppSelector } from "../../hooks/redux";
 import { useGetTasksQuery } from "../../services/TasksService";
 import { selectUser } from "../../store/reducers/authSlice";
-import Loading from "../loading/Loading";
-import TaskCompleted from "../../components/tasks/TaskCompleted/TaskCompleted";
 
 const Completed = () => {
   const { isAuth, userId } = useAppSelector(selectUser);

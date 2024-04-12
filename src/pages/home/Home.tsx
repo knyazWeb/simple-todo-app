@@ -1,9 +1,9 @@
 import { Navigate } from "react-router-dom";
+import Loading from "../../components/loading/Loading.tsx";
 import Task from "../../components/tasks/Task/Task.tsx";
 import { useAppSelector } from "../../hooks/redux.ts";
 import { useGetTasksQuery } from "../../services/TasksService";
 import { selectUser } from "../../store/reducers/authSlice.ts";
-import Loading from "../loading/Loading.tsx";
 
 const Home = () => {
   const { isAuth, userId } = useAppSelector(selectUser);

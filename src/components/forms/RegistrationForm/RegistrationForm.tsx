@@ -96,7 +96,6 @@ const RegistrationForm = () => {
         })}
       />
       {errors.password && <p className="text-xs text-red-400">{errors.password.message}</p>}
-      {/*TODO: FIX PROBLEM IN SAFARI (Checkbox багуется)  */}
       <Checkbox
         clearErrors={() => clearErrors("checkbox")}
         errorMessage={errors.checkbox?.message}
