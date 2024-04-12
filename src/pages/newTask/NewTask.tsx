@@ -15,7 +15,6 @@ const NewTask = () => {
           <RxCross2 color="black" />
         </ButtonIcon>
       </div> 
-      {/*TODO: WRITE A MESSAGE*/}
       <h1 className=" text-2xl font-bold">New task</h1>
       <NewTaskForm />
     </div>

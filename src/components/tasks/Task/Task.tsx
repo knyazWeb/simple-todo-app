@@ -5,6 +5,7 @@ import { useAppSelector } from "../../../hooks/redux.ts";
 import { useChangeTaskMutation, useRemoveTaskMutation } from "../../../services/TasksService.ts";
 import { selectUser } from "../../../store/reducers/authSlice.ts";
 import { ITask } from "../../../store/types/store.types.ts";
+import css from './Task.module.scss'
 
 type TaskProps = {
   id: string;
@@ -15,7 +16,7 @@ type TaskProps = {
 };
 
 const Task = ({ id, title, description, date, status }: TaskProps) => {
-  const [removeTask] = useRemoveTaskMutation();
+  const [removeTask, { isLoading: removeIsLoading, isSuccess: removeIsSuccess }] = useRemoveTaskMutation();
   const { userId } = useAppSelector(selectUser);
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [isEditingDescription, setIsEditingDescription] = useState(false);
@@ -47,7 +48,7 @@ const Task = ({ id, title, description, date, status }: TaskProps) => {
   return (
     <div
       style={{ boxShadow: "0px 11px 4px -7px rgba(0, 0, 0, 1)" }}
-      className="relative w-full flex flex-col border-black border rounded-md p-3 break-words shadow-black shadow">
+      className={`relative w-full flex flex-col border-black border rounded-md p-3 break-words shadow-black shadow  ${removeIsLoading ? css.delete : ""} ${removeIsSuccess ? 'hidden' : ''}`}>
       {isEditingTitle ? (
         <input
           ref={titleInputRef}

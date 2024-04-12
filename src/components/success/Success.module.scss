@@ -1,0 +1,17 @@
+.arrowWrapper {
+  animation-name: roll;
+  animation-duration: 0.3s;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+}
+
+@keyframes roll {
+  from {
+    transform: rotate(90deg);
+  }
+  
+  to {
+    transform: rotate(360deg);
+  }
+}
