@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
 import { SubmitErrorHandler, SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useAppSelector } from "../../../hooks/redux.ts";
 import { useSignUpMutation, useUpdateNameMutation } from "../../../services/AuthService.ts";
-import { selectUser } from "../../../store/reducers/authSlice.ts";
 import ButtonMain from "../../ui/Buttons/ButtonMain/ButtonMain";
 import Checkbox from "../../ui/Checkboxs/Checkbox.tsx";
-import Input from "../../ui/Input/Input.tsx";
+import CustomInput from "../../ui/CustomInput/CustomInput.tsx";
 import { regExpEmail } from "../regExpEmail.ts";
 
 type RegistrationForm = {
@@ -58,7 +56,7 @@ const RegistrationForm = () => {
     <form
       onSubmit={handleSubmit(submit, error)}
       className="flex justify-center items-start w-full max-w-64 flex-col gap-5 text-">
-      <Input
+      <CustomInput
         type="text"
         placeholder="Name"
         {...register("name", {
@@ -71,7 +69,7 @@ const RegistrationForm = () => {
       />
       {errors.name && <p className="text-xs text-red-400">{errors.name.message}</p>}
 
-      <Input
+      <CustomInput
         type="text"
         placeholder="E-mail"
         {...register("email", {
@@ -84,7 +82,7 @@ const RegistrationForm = () => {
       />
       {errors.email && <p className="text-xs text-red-400">{errors.email.message}</p>}
 
-      <Input
+      <CustomInput
         placeholder="Password"
         type="password"
         {...register("password", {

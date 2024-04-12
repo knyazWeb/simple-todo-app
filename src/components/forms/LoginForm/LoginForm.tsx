@@ -1,10 +1,10 @@
-import { SubmitHandler, useForm } from "react-hook-form";
-import Input from "../../ui/Input/Input";
-import { regExpEmail } from "../regExpEmail";
-import ButtonMain from "../../ui/Buttons/ButtonMain/ButtonMain";
-import { useSignInMutation } from "../../../services/AuthService";
 import { useEffect } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { useSignInMutation } from "../../../services/AuthService";
+import ButtonMain from "../../ui/Buttons/ButtonMain/ButtonMain";
+import CustomInput from "../../ui/CustomInput/CustomInput";
+import { regExpEmail } from "../regExpEmail";
 
 type LoginForm = {
   email: string;
@@ -43,7 +43,7 @@ const LoginForm = () => {
     <form
       onSubmit={handleSubmit(submit, error)}
       className="flex justify-center items-start w-full max-w-64 flex-col gap-5 text-">
-      <Input
+      <CustomInput
         type="text"
         placeholder="E-mail"
         {...register("email", {
@@ -56,7 +56,7 @@ const LoginForm = () => {
       />
       {errors.email && <p className="text-xs text-red-400">{errors.email.message}</p>}
 
-      <Input
+      <CustomInput
         placeholder="Password"
         type="password"
         {...register("password", {
