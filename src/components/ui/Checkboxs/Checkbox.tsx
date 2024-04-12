@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import css from "./checkbox.module.scss";
+import css from "./Checkbox.module.scss";
 import cx from "classnames";
 import Checksvg from "./check.svg";
 import { UseFormRegisterReturn } from "react-hook-form";
