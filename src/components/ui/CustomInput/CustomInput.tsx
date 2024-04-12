@@ -1,7 +1,7 @@
 import { forwardRef } from "react";
-import css from "./Input.module.scss";
+import css from "./CustomInput.module.scss";
 
-const Input = forwardRef<HTMLInputElement, React.HTMLProps<HTMLInputElement>>((props, ref) => (
+const CustomInput = forwardRef<HTMLInputElement, React.HTMLProps<HTMLInputElement>>((props, ref) => (
   <input
     ref={ref}
     {...props}
@@ -9,4 +9,4 @@ const Input = forwardRef<HTMLInputElement, React.HTMLProps<HTMLInputElement>>((p
   />
 ));
 
-export default Input;
+export default CustomInput;
