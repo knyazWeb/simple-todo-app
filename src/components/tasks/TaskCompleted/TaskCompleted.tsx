@@ -2,6 +2,7 @@ import { MdDelete } from "react-icons/md";
 import { selectUser } from "../../../store/reducers/authSlice";
 import { useAppSelector } from "../../../hooks/redux";
 import { useRemoveTaskMutation } from "../../../services/TasksService";
+import css from './TaskCompleted.module.scss'
 
 type TaskCompletedProps = {
   id: string;
@@ -12,12 +13,12 @@ type TaskCompletedProps = {
 };
 
 const TaskCompleted = ({ id, title, description, date, status }: TaskCompletedProps) => {
-  const [removeTask] = useRemoveTaskMutation();
+  const [removeTask, { isLoading: removeIsLoading, isSuccess: removeIsSuccess }] = useRemoveTaskMutation();
   const { userId } = useAppSelector(selectUser);
   return (
     <div
       style={{ boxShadow: "0px 11px 4px -7px rgba(0, 0, 0, 1)" }}
-      className="relative w-full flex flex-col border-black border rounded-md p-3 break-words shadow-black shadow bg-gray-300">
+      className={`relative w-full flex flex-col border-black border rounded-md p-3 break-words shadow-black shadow bg-gray-300  ${removeIsLoading ? css.delete : ""} ${removeIsSuccess ? 'hidden' : ''}`}>
       <h2 className="text-xl">{title}</h2>
 
       <p className="text-base text-gray-600">{description}</p>

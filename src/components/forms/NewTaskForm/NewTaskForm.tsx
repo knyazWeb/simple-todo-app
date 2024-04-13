@@ -1,4 +1,4 @@
-import { SubmitErrorHandler, SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../../hooks/redux.ts";
 import { useAddTaskMutation } from "../../../services/TasksService.ts";
@@ -40,11 +40,10 @@ const NewTaskForm = () => {
     }
   };
 
-  const error: SubmitErrorHandler<ITask> = (data) => {};
   return (
     <>
       {(isSuccess && <Success />) || (isError && <Error />)}
-      <form className="flex justify-center items-start w-full flex-col gap-5" onSubmit={handleSubmit(submit, error)}>
+      <form className="flex justify-center items-start w-full flex-col gap-5" onSubmit={handleSubmit(submit)}>
         <CustomInput
           type="text"
           placeholder="Task Title"
