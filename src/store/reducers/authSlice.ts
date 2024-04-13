@@ -26,7 +26,7 @@ const authSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addMatcher(authApi.endpoints.signUp.matchFulfilled, (state, action) => {
+    builder.addMatcher(authApi.endpoints.signUp.matchFulfilled, (_state, action) => {
       if (action.payload.idToken && action.payload.refreshToken) {
         localStorage.setItem("token", action.payload.idToken);
         localStorage.setItem("refreshToken", action.payload.refreshToken);
@@ -40,7 +40,7 @@ const authSlice = createSlice({
         state.userId = action.payload.users[0].localId;
       }
     });
-    builder.addMatcher(authApi.endpoints.signIn.matchFulfilled, (state, action) => {
+    builder.addMatcher(authApi.endpoints.signIn.matchFulfilled, (_state, action) => {
       if (action.payload.idToken && action.payload.refreshToken) {
         localStorage.setItem("token", action.payload.idToken);
         localStorage.setItem("refreshToken", action.payload.refreshToken);
