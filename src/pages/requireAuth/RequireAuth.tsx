@@ -1,8 +1,8 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../hooks/redux";
-import { useGetUserQuery } from "../services/AuthService";
-import { logout, selectUser } from "../store/reducers/authSlice";
-import Loading from "./loading/Loading";
+import Loading from "../../components/loading/Loading";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { useGetUserQuery } from "../../services/AuthService";
+import { logout, selectUser } from "../../store/reducers/authSlice";
 
 const RequireAuth = () => {
   const token = localStorage.getItem("token") ?? "";
