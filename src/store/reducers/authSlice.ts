@@ -4,7 +4,7 @@ import { RootState } from "../store";
 import { authApi } from "../../services/AuthService";
 
 const initialState: IUserAuth = {
-  user: null,
+  userName: null,
   isAuth: false,
   userId: null,
 };
@@ -14,11 +14,11 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     login: (state, action: PayloadAction<IUserAuth>) => {
-      state.user = action.payload.user;
+      state.userName = action.payload.userName;
       state.isAuth = true;
     },
     logout: (state) => {
-      state.user = null;
+      state.userName = null;
       state.isAuth = false;
       state.userId = null;
       localStorage.removeItem("token");
@@ -35,7 +35,7 @@ const authSlice = createSlice({
     }),
     builder.addMatcher(authApi.endpoints.getUser.matchFulfilled, (state, action) => {
       if (action.payload.users && action.payload.users.length) {
-        state.user = action.payload.users[0].displayName;
+        state.userName = action.payload.users[0].displayName;
         state.isAuth = true;
         state.userId = action.payload.users[0].localId;
       }
@@ -56,8 +56,8 @@ export const { login, logout } = authSlice.actions;
 
 
 export const selectUser = createSelector(
-  (state: RootState) => state.auth.user,
+  (state: RootState) => state.auth.userName,
   (state: RootState) => state.auth.isAuth,
   (state: RootState) => state.auth.userId,
-  (user, isAuth, userId) => ({user, isAuth, userId})
+  (userName, isAuth, userId) => ({userName, isAuth, userId})
 );

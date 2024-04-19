@@ -9,10 +9,10 @@ const Registration = () => {
   }
 
   return (
-    <div className="h-dvh flex flex-col justify-start items-center w-full">
+    <div className="h-full flex flex-col justify-start items-center w-full">
       <div className="w-full mt-9">
-        <h1 className="text-2xl font-bold">Create account</h1>
-        <p className="text-sm mt-1 mb-8 text-gray-400">Please fill in the form to continue</p>
+        <h1 className="text-2xl font-bold">Create Account &#x1F44B;</h1>
+        <p className="text-sm mt-5 mb-5 text-gray-400">Please fill in the form to continue using our app</p>
       </div>
       <RegistrationForm />
       <div>
@@ -20,7 +20,7 @@ const Registration = () => {
           Already have an account?{" "}
           <span
             onClick={() => navigate("/login")}
-            className="text-blue-500 cursor-pointer hover:text-blue-700 transition-colors duration-300 tim ease-in-out">
+            className="text-red-400 hover:text-red-500 cursor-pointer underline transition-colors duration-300 tim ease-in-out">
             Sign in
           </span>
         </p>

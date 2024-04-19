@@ -1,59 +1,60 @@
-import { FaPlus } from "react-icons/fa6";
-import { RiLogoutBoxLine } from "react-icons/ri";
+import { GoPlus } from "react-icons/go";
 
-import ButtonIcon from "../ui/Buttons/ButtonIcon/ButtonIcon.tsx";
+import ButtonMenu from "../ui/Buttons/ButtonMenu/ButtonMenu.tsx";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../../hooks/redux.ts";
-import { logout } from "../../store/reducers/authSlice.ts";
-import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
+import { CiCalendar } from "react-icons/ci";
+import { LuFileCheck } from "react-icons/lu";
+
+import { IoPersonOutline } from "react-icons/io5";
+
 import { GoHome } from "react-icons/go";
 
 const MenuPanel = () => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   const currentLocation = useLocation();
 
   return (
-    <div className="fixed bottom-0 right-1/2 translate-x-1/2  w-full  h-16 bg-white border-t border-black px-8">
-      <div className="flex justify-around items-center h-full max-w-md mx-auto my-0 ">
-        <ButtonIcon
-          onClick={() => {
-            dispatch(logout());
-            navigate("/");
-          }}
+    <div className="fixed bottom-0 right-1/2 translate-x-1/2 w-full h-16 bg-white border-t border-black px-8">
+      <div className="flex justify-between items-center h-full max-w-md mx-auto my-0 ">
+        <ButtonMenu
+          onClick={() => navigate("/")}
           type="button"
-          color="bg-red-400"
-          title="Logout"
-          borderRadius="rounded-full">
-          <RiLogoutBoxLine color="white" />
-        </ButtonIcon>
-        <ButtonIcon
+          title="Home"
+          disabled={currentLocation.pathname === "/"}>
+          <GoHome size={25} />
+        </ButtonMenu>
+
+        {/*TODO: название table под вопросом*/}
+        <ButtonMenu
+          onClick={() => navigate("/table")}
+          type="button"
+          title="Table"
+          disabled={currentLocation.pathname === "/table"}>
+          <CiCalendar size={25} />
+        </ButtonMenu>
+        <ButtonMenu
           onClick={() => navigate("/createTask")}
           type="button"
           title="Create task"
-          color="bg-red-400"
-          disabled={currentLocation.pathname === "/createTask"}
-          borderRadius="rounded-full">
-          <FaPlus color="white" />
-        </ButtonIcon>
-        <ButtonIcon
-          onClick={() => navigate("/")}
-          type="button"
-          color="bg-red-400"
-          title="Home"
-          disabled={currentLocation.pathname === "/"}
-          borderRadius="rounded-full">
-          <GoHome size={25} color="white" />
-        </ButtonIcon>
-        <ButtonIcon
+          disabled={currentLocation.pathname === "/createTask"}>
+          <div className="rounded-full p-2 bg-red-400">
+            <GoPlus size={25} color="white" />
+          </div>
+        </ButtonMenu>
+        <ButtonMenu
           onClick={() => navigate("/completed")}
           type="button"
-          color="bg-red-400"
-          title="Completed tasks"
-          disabled={currentLocation.pathname === "/completed"}
-          borderRadius="rounded-full">
-          <IoCheckmarkDoneCircleOutline size={25} color="white" />
-        </ButtonIcon>
+          title="Tasks"
+          disabled={currentLocation.pathname === "/completed"}>
+          <LuFileCheck size={25} />
+        </ButtonMenu>
+        <ButtonMenu
+          onClick={() => navigate("/profile")}
+          type="button"
+          title="Profile"
+          disabled={currentLocation.pathname === "/profile"}>
+          <IoPersonOutline size={25} />
+        </ButtonMenu>
       </div>
     </div>
   );
