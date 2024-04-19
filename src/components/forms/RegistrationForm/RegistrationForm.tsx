@@ -19,7 +19,7 @@ const RegistrationForm = () => {
   const [userName, setUserName] = useState("");
 
   const [signUp, { data: responseData, isLoading, isSuccess }] = useSignUpMutation();
-  const [updateName, {isSuccess: updateIsSuccess}] = useUpdateNameMutation();
+  const [updateName, { isSuccess: updateIsSuccess }] = useUpdateNameMutation();
 
   useEffect(() => {
     if (isSuccess && responseData) {
@@ -53,47 +53,50 @@ const RegistrationForm = () => {
   // @ts-ignore
   const error: SubmitErrorHandler<RegistrationForm> = (data) => {};
   return (
-    <form
-      onSubmit={handleSubmit(submit, error)}
-      className="flex justify-center items-start w-full max-w-64 flex-col gap-5 text-">
-      <CustomInput
-        type="text"
-        placeholder="Name"
-        {...register("name", {
-          required: "Write your name",
-          minLength: {
-            value: 2,
-            message: "Write the correct name",
-          },
-        })}
-      />
-      {errors.name && <p className="text-xs text-red-400">{errors.name.message}</p>}
+    <form onSubmit={handleSubmit(submit, error)} className="flex justify-center items-start w-full gap-5 flex-col">
+      <div className='w-full'>
+        <CustomInput
+          type="text"
+          placeholder="Name"
+          {...register("name", {
+            required: "Write your name",
+            minLength: {
+              value: 2,
+              message: "Write the correct name",
+            },
+          })}
+        />
+        {errors.name && <p className="mt-2 text-xs text-red-400">{errors.name.message}</p>}
+      </div>
+      <div className='w-full'>
+        <CustomInput
+          type="text"
+          placeholder="E-mail"
+          {...register("email", {
+            required: "Enter your email",
+            pattern: {
+              value: regExpEmail,
+              message: "Wrong e-mail, enter a correct e-mail",
+            },
+          })}
+        />
+        {errors.email && <p className="mt- text-xs text-red-400">{errors.email.message}</p>}
+      </div>
+      <div className='w-full'>
+        <CustomInput
+          placeholder="Password"
+          type="password"
+          {...register("password", {
+            required: "Create a password",
+            minLength: {
+              value: 5,
+              message: "Minimum password length is 5",
+            },
+          })}
+        />
 
-      <CustomInput
-        type="text"
-        placeholder="E-mail"
-        {...register("email", {
-          required: "Enter your email",
-          pattern: {
-            value: regExpEmail,
-            message: "Wrong e-mail, enter a correct e-mail",
-          },
-        })}
-      />
-      {errors.email && <p className="text-xs text-red-400">{errors.email.message}</p>}
-
-      <CustomInput
-        placeholder="Password"
-        type="password"
-        {...register("password", {
-          required: "Create a password",
-          minLength: {
-            value: 5,
-            message: "Minimum password length is 5",
-          },
-        })}
-      />
-      {errors.password && <p className="text-xs text-red-400">{errors.password.message}</p>}
+        {errors.password && <p className="mt-2 text-xs text-red-400">{errors.password.message}</p>}
+      </div>
       <Checkbox
         clearErrors={() => clearErrors("checkbox")}
         errorMessage={errors.checkbox?.message}

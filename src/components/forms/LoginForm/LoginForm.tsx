@@ -40,34 +40,35 @@ const LoginForm = () => {
   const error: SubmitErrorHandler<RegistrationForm> = (data) => {};
 
   return (
-    <form
-      onSubmit={handleSubmit(submit, error)}
-      className="flex justify-center items-start w-full max-w-64 flex-col gap-5 text-">
-      <CustomInput
-        type="text"
-        placeholder="E-mail"
-        {...register("email", {
-          required: "Enter your email",
-          pattern: {
-            value: regExpEmail,
-            message: "Wrong e-mail, enter a correct e-mail",
-          },
-        })}
-      />
-      {errors.email && <p className="text-xs text-red-400">{errors.email.message}</p>}
-
-      <CustomInput
-        placeholder="Password"
-        type="password"
-        {...register("password", {
-          required: "Create a password",
-          minLength: {
-            value: 5,
-            message: "Minimum password length is 5",
-          },
-        })}
-      />
-      {errors.password && <p className="text-xs text-red-400">{errors.password.message}</p>}
+    <form onSubmit={handleSubmit(submit, error)} className="flex justify-center items-start w-full flex-col gap-5">
+      <div className='w-full'>
+        <CustomInput
+          type="text"
+          placeholder="E-mail"
+          {...register("email", {
+            required: "Enter your email",
+            pattern: {
+              value: regExpEmail,
+              message: "Wrong e-mail, enter a correct e-mail",
+            },
+          })}
+        />
+        {errors.email && <p className="mt-2 text-xs text-red-400">{errors.email.message}</p>}
+      </div>
+      <div className='w-full'>
+        <CustomInput
+          placeholder="Password"
+          type="password"
+          {...register("password", {
+            required: "Create a password",
+            minLength: {
+              value: 5,
+              message: "Minimum password length is 5",
+            },
+          })}
+        />
+        {errors.password && <p className="mt-2 text-xs text-red-400">{errors.password.message}</p>}
+      </div>
 
       <ButtonMain className="mt-5" type="submit" disabled={false}>
         {isLoading ? "Loading..." : "Log in"}

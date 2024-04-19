@@ -1,5 +1,4 @@
 import { ButtonType } from "../ButtonType.ts";
-import css from "./ButtonIcon.module.scss";
 
 type ButtonIconProps = {
   children: React.ReactNode;
@@ -18,7 +17,7 @@ const ButtonIcon = ({ children, type, color, borderRadius, disabled, title, onCl
       type={type}
       onClick={onClick}
       title={title}
-      className={`w-9 h-9 flex justify-center items-center ${borderRadius} ${color || ''} ${disabled ? css.active : css.default}`}>
+      className={`w-9 h-9 flex justify-center items-center ${borderRadius} ${color || ''}`}>
       {children}
     </button>
   );

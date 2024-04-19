@@ -7,7 +7,7 @@ export interface ITask {
 }
 
 export interface IUserAuth {
-  user: string | null;
+  userName: string | null;
   isAuth: boolean;
   userId: string | null;
 }
