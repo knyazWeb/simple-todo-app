@@ -17,7 +17,7 @@ const ButtonIcon = ({ children, type, color, borderRadius, disabled, title, onCl
       type={type}
       onClick={onClick}
       title={title}
-      className={`w-9 h-9 flex justify-center items-center ${borderRadius} ${color || ''}`}>
+      className={`w-9 h-9 flex justify-center items-center hover:brightness-95 ease-in-out duration-300 ${borderRadius} ${color || ''}`}>
       {children}
     </button>
   );

@@ -21,13 +21,17 @@ const NewTaskForm = () => {
   } = useForm<ITask>({
     defaultValues: {
       date: new Date().toISOString().split("T")[0],
-      status: "In progress",
+      status: "In process",
     },
   });
 
   const submit: SubmitHandler<ITask> = async (data) => {
+    const date = new Date(data.date).toLocaleDateString("en-GB", {
+      month: "short",
+      day: "2-digit",
+    });
     const newTask = {
-      date: data.date,
+      date,
       title: data.title,
       description: data.description,
       status: data.status,
@@ -43,7 +47,9 @@ const NewTaskForm = () => {
   return (
     <>
       {(isSuccess && <Success />) || (isError && <Error />)}
-      <form className="flex justify-center items-start w-full flex-col gap-5" onSubmit={handleSubmit(submit)}>
+      <form
+        className="flex justify-center items-start w-full flex-col gap-5"
+        onSubmit={handleSubmit(submit)}>
         <CustomInput
           type="text"
           placeholder="Task Title"
@@ -65,7 +71,7 @@ const NewTaskForm = () => {
         {errors.description && <p className="text-xs text-red-400">{errors.description.message}</p>}
         <CustomInput
           type="date"
-          style={{ color: "rgb(64 64 64)" }}
+          style={{ color: "rgb(64 64 64)", cursor: "pointer"}}
           {...register("date", {
             required: "Choose a date",
             validate: (value) => {

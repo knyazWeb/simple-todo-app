@@ -3,7 +3,7 @@ import { SubmitErrorHandler, SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useSignUpMutation, useUpdateNameMutation } from "../../../services/AuthService.ts";
 import ButtonMain from "../../ui/Buttons/ButtonMain/ButtonMain";
-import Checkbox from "../../ui/Checkboxs/Checkbox.tsx";
+import Checkbox from "../../ui/Checkbox/Checkbox.tsx";
 import CustomInput from "../../ui/CustomInput/CustomInput.tsx";
 import { regExpEmail } from "../regExpEmail.ts";
 
@@ -53,8 +53,10 @@ const RegistrationForm = () => {
   // @ts-ignore
   const error: SubmitErrorHandler<RegistrationForm> = (data) => {};
   return (
-    <form onSubmit={handleSubmit(submit, error)} className="flex justify-center items-start w-full gap-5 flex-col">
-      <div className='w-full'>
+    <form
+      onSubmit={handleSubmit(submit, error)}
+      className="flex justify-center items-start w-full gap-5 flex-col">
+      <div className="w-full">
         <CustomInput
           type="text"
           placeholder="Name"
@@ -68,7 +70,7 @@ const RegistrationForm = () => {
         />
         {errors.name && <p className="mt-2 text-xs text-red-400">{errors.name.message}</p>}
       </div>
-      <div className='w-full'>
+      <div className="w-full">
         <CustomInput
           type="text"
           placeholder="E-mail"
@@ -82,7 +84,7 @@ const RegistrationForm = () => {
         />
         {errors.email && <p className="mt- text-xs text-red-400">{errors.email.message}</p>}
       </div>
-      <div className='w-full'>
+      <div className="w-full">
         <CustomInput
           placeholder="Password"
           type="password"
@@ -101,7 +103,7 @@ const RegistrationForm = () => {
         clearErrors={() => clearErrors("checkbox")}
         errorMessage={errors.checkbox?.message}
         register={register("checkbox", { required: "Accept" })}>
-        <span className="ml-3 text-sm cursor-pointer underline">I agree to privacy policy & terms</span>{" "}
+        <span className="block text-sm cursor-pointer underline">I agree to privacy policy & terms</span>
       </Checkbox>
       <ButtonMain className="mt-5" type="submit" disabled={false}>
         {isLoading ? "Loading..." : "Sign up"}

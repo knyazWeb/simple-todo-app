@@ -17,7 +17,7 @@ const Checkbox = React.memo(
   ({ register, errorMessage, children, isRequired, isDisabled, clearErrors }: CheckboxProps) => {
     const [isChecked, setIsChecked] = useState<boolean>(false);
     return (
-      <label className={`flex items-center text-gray-400 ${css.label}`}>
+      <label className={`flex gap-3 justify-start items-center text-gray-400 ${css.label}`}>
         <input
           disabled={isDisabled}
           className={css.blind_input}

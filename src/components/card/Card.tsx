@@ -7,7 +7,7 @@ type CardProps = {
 const Card = ({ bgColor, type, children }: CardProps) => {
   return (
     <div
-      className={`flex gap-2 justify-start items-center ${bgColor} p-3 rounded-2xl cursor-pointer hover:brightness-90 transition-all ease-in-out duration-200`}>
+      className={`flex gap-2 justify-start items-center ${bgColor} p-3 rounded-2xl cursor-pointer hover:brightness-90 transition-all ease-in-out duration-300`}>
       <div style={{ backgroundColor: "rgba(0, 0, 0, 0.1)" }} className="p-2 rounded-full">
         {children}
       </div>

@@ -3,7 +3,7 @@ export interface ITask {
   title: string;
   date: string;
   description: string;
-  status: string;
+  status: "In process" | "Completed" | "On going" | "Canceled";
 }
 
 export interface IUserAuth {
