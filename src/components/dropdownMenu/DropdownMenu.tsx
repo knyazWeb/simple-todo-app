@@ -1,19 +1,40 @@
+import { useRef } from "react";
 import { IoEllipsisVertical } from "react-icons/io5";
+import { useOnClickOutside } from "../../hooks/useOnClickOutside";
+import { Transition } from "react-transition-group";
 
 type DropdownMenuProps = {
-  isActive: boolean;
-  setIsActive: (value: boolean) => void;
+  isDropdownActive: boolean;
+  setIsDropdownActive: (value: boolean) => void;
+  children: React.ReactNode;
 };
 
-const DropdownMenu = ({ isActive, setIsActive }: DropdownMenuProps) => {
+const DropdownMenu = ({
+  isDropdownActive,
+  setIsDropdownActive,
+  children,
+}: DropdownMenuProps) => {
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  useOnClickOutside(dropdownRef, () => setIsDropdownActive(false));
   return (
-    <div>
+    <div className="relative flex flex-col gap-0.5 items-end" ref={dropdownRef}>
       <button
-        onClick={() => setIsActive(!isActive)}
-        className="w-7 h-7 flex justify-center items-center rounded-md bg-gray-200 hover:brightness-95 ease-in-out duration-300"
+        onClick={() => setIsDropdownActive(!isDropdownActive)}
+        className="w-6 h-6 flex justify-center items-center rounded-md bg-gray-200 hover:brightness-95 ease-in-out duration-300"
         type="button">
-        <IoEllipsisVertical size={20} />
+        <IoEllipsisVertical size={18} />
       </button>
+      <Transition in={isDropdownActive} timeout={300}>
+        {(state) => (
+          <div
+            className={`relative  ${
+              state === "entering" || state === "entered" ? "opacity-100" : "opacity-0"
+            } text-black border-black border rounded-md text-xs  transition-opacity ease-in-out duration-300 flex flex-col items-start overflow-hidden`}
+            >
+            {children}
+          </div>
+        )}
+      </Transition>
     </div>
   );
 };

@@ -17,8 +17,31 @@ const Home = () => {
   const { isAuth, userId } = useAppSelector(selectUser);
   const { data, isLoading, isError } = useGetTasksQuery(userId, { skip: !isAuth });
 
-  const dataTasksKeys = data && Object.keys(data)
-  
+  const dataTasksKeys = data && Object.keys(data).slice(-3).reverse();
+  const tasksStatus = {
+    onGoing: 0,
+    inProcess: 0,
+    completed: 0,
+    canceled: 0,
+  };
+  if (data) {
+    for (const key in data) {
+      console.log(key)
+      if (data[key].status === "On going") {
+        tasksStatus.onGoing += 1;
+      }
+      if (data[key].status === "In process") {
+        tasksStatus.inProcess += 1;
+      }
+      if (data[key].status === "Completed") {
+        tasksStatus.completed += 1;
+      }
+      if (data[key].status === "Canceled") {
+        tasksStatus.canceled += 1;
+      }
+    }
+  }
+
   if (!isAuth && isError) {
     return <Navigate to="/registration" replace />;
   }
@@ -33,37 +56,37 @@ const Home = () => {
         <UserHeader />
       </div>
       <div className="grid grid-cols-2 grid-rows-2 gap-3 mb-7">
-        <Card bgColor="bg-blue-400" type="On going">
+        <Card bgColor="bg-blue-400" type="On going" taskCount={tasksStatus.onGoing}>
           <VscSync size={20} color="white" />
         </Card>
-        <Card bgColor="bg-yellow-500" type="In process">
+        <Card bgColor="bg-yellow-500" type="In process" taskCount={tasksStatus.inProcess}>
           <FaRegClock size={20} color="white" />
         </Card>
-        <Card bgColor="bg-teal-500" type="Completed">
+        <Card bgColor="bg-teal-500" type="Completed" taskCount={tasksStatus.completed}>
           <LuFileCheck size={20} color="white" />
         </Card>
-        <Card bgColor="bg-red-400" type="Canceled">
+        <Card bgColor="bg-red-400" type="Canceled" taskCount={tasksStatus.canceled}>
           <LuFileX size={20} color="white" />
         </Card>
       </div>
       <div>
-        <span className="block mb-2 text-lg">{dataTasksKeys && 'Recent Tasks'}</span>
+        <span className="block mb-2 text-lg">{dataTasksKeys && "Recent Tasks"}</span>
         <div className="flex flex-col gap-4">
-          {dataTasksKeys
-            && dataTasksKeys.map((key) => {
-                const task = data[key];
-                return (
-                  <Task
-                    key={key}
-                    id={key}
-                    title={task.title}
-                    date={task.date}
-                    description={task.description}
-                    status={task.status}
-                  />
-                );
-              })
-            }
+          {dataTasksKeys &&
+            dataTasksKeys.map((key) => {
+              const task = data[key];
+
+              return (
+                <Task
+                  key={key}
+                  id={key}
+                  title={task.title}
+                  date={task.date}
+                  description={task.description}
+                  status={task.status}
+                />
+              );
+            })}
         </div>
       </div>
     </div>

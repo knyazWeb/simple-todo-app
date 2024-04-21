@@ -1,14 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
-import { MdDelete, MdOutlineDone } from "react-icons/md";
+import { MdDelete, MdEdit } from "react-icons/md";
+
 import { useAppSelector } from "../../../hooks/redux.ts";
 import { useChangeTaskMutation, useRemoveTaskMutation } from "../../../services/TasksService.ts";
 import { selectUser } from "../../../store/reducers/authSlice.ts";
 import { ITask } from "../../../store/types/store.types.ts";
-import css from "./Task.module.scss";
-import StatusTag from "../../ui/Tags/StatusTag/StatusTag.tsx";
-import DateTag from "../../ui/Tags/DateTag/DateTag.tsx";
 import DropdownMenu from "../../dropdownMenu/DropdownMenu.tsx";
+import DateTag from "../../ui/Tags/DateTag/DateTag.tsx";
+import StatusTag from "../../ui/Tags/StatusTag/StatusTag.tsx";
+import css from "./Task.module.scss";
 
 type TaskProps = {
   id: string;
@@ -59,7 +60,7 @@ const Task = ({ id, title, description, date, status }: TaskProps) => {
           ref={titleInputRef}
           value={titleValue}
           style={{ backgroundColor: "#F6F6F6" }}
-          className="text-lg leading-tight mb-2 mr-7"
+          className="text-lg leading-tight mb-2 mr-6"
           onChange={(e) => setTitleValue(e.target.value)}
           onBlur={() => {
             setIsEditingTitle(false);
@@ -67,7 +68,7 @@ const Task = ({ id, title, description, date, status }: TaskProps) => {
           }}
         />
       ) : (
-        <h2 onClick={() => setIsEditingTitle(true)} className="text-lg leading-none mb-2 mr-7">
+        <h2 onClick={() => setIsEditingTitle(true)} className="text-lg leading-none mb-2 mr-6">
           {titleValue}
         </h2>
       )}
@@ -86,42 +87,46 @@ const Task = ({ id, title, description, date, status }: TaskProps) => {
       ) : (
         <p
           onClick={() => setIsEditingDescription(true)}
-          className="text-sm text-gray-600 mb-2 leading-none">
+          className="text-sm text-gray-600 mb-4 leading-none">
           {descriptionValue}
         </p>
       )}
-      <div className="flex flex-row justify-start items-center gap-2">
-        <StatusTag status={status} />
+      <div className="flex flex-col justify-center items-start gap-1.5">
         <DateTag date={date} />
+        <StatusTag status={status} />
       </div>
       <div className="absolute top-1.5 right-1.5">
-        <DropdownMenu isActive={isDropdownActive} setIsActive={setIsDropdownActive} />
-      </div>
-
-      {/*<div className="absolute bottom-2 right-2 flex gap-1">
-        {(isEditingTitle ||
-          isEditingDescription ||
-          titleValue !== title ||
-          description !== descriptionValue) && (
-          <MdOutlineDone
+        <DropdownMenu isDropdownActive={isDropdownActive} setIsDropdownActive={setIsDropdownActive}>
+          <button
             onClick={() => {
-              (titleValue !== title || descriptionValue !== description) && saveInputHandler();
+              setIsDropdownActive(false);
             }}
-            size={25}
-            className="text-blue-500 cursor-pointer hover:text-blue-700 transition-all duration-300 ease-in-out"
-          />
-        )}
-        <IoCheckmarkDoneCircleOutline
-          onClick={() => changeTask({ userId, taskId: id, task: { status: "Completed" } as ITask })}
-          size={25}
-          className="text-green-600 cursor-pointer hover:text-green-800 transition-all duration-300 ease-in-out"
-        />
-        <MdDelete
-          onClick={() => removeTask({ userId, taskId: id })}
-          size={25}
-          className="text-red-600 cursor-pointer hover:text-red-800 transition-all duration-300 ease-in-out"
-        />
-      </div>*/}
+            className="flex w-full gap-0.5 items-center justify-start text-blue-400 transition-all duration-300 ease-in-out hover:brightness-90 border-b border-neutral-400 py-1 pr-4 pl-1"
+            style={{ backgroundColor: "#f6f6f6" }}>
+            <MdEdit size={15} className="inline " />
+            <span className="inline leading-none">Edit</span>
+          </button>
+          <button
+            onClick={() => {
+              setIsDropdownActive(false);
+            }}
+            className="flex w-full gap-0.5 items-center justify-start text-teal-500 transition-all duration-300 ease-in-out hover:brightness-90 border-b border-neutral-400 py-1 pr-4 pl-1"
+            style={{ backgroundColor: "#f6f6f6" }}>
+            <IoCheckmarkDoneCircleOutline size={15} className="inline " />
+            <span className="inline leading-none">Complete</span>
+          </button>
+          <button
+            onClick={() => {
+              setIsDropdownActive(false);
+              removeTask({ userId, taskId: id });
+            }}
+            className="flex w-full gap-0.5 items-center justify-start text-red-400 transition-all duration-300 ease-in-out hover:brightness-90 py-1 pr-4 pl-1"
+            style={{ backgroundColor: "#f6f6f6" }}>
+            <MdDelete size={15} className="inline " />
+            <span className="inline leading-none">Delete</span>
+          </button>
+        </DropdownMenu>
+      </div>
     </div>
   );
 };
