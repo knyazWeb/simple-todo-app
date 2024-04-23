@@ -62,7 +62,12 @@
 
 * {
   outline-color: rgb(248, 88, 88);
+  &::selection {
+    background-color: rgb(248, 88, 88);
+    color: white;
+  }
 }
+
 
 body {
   font-family: 'Roboto';
@@ -74,3 +79,4 @@ body {
   margin: 48px auto 0;
   scroll-behavior: smooth;
 }
+
