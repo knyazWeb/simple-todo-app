@@ -58,14 +58,22 @@
   font-style: italic;
 }
 
-
-
+input::-webkit-datetime-edit-day-field:focus,
+input::-webkit-datetime-edit-month-field:focus,
+input::-webkit-datetime-edit-year-field:focus {
+    background-color: rgb(248, 88, 88);
+    
+}
 * {
   outline-color: rgb(248, 88, 88);
+  &::selection {
+    background-color: rgb(248, 88, 88);
+    color: white;
+  }
 }
 
 body {
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-weight: 400;
   font-style: normal;
   background-color: #f6f6f6;

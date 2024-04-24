@@ -13,8 +13,7 @@ const Card = ({ bgColor, type, taskCount, children }: CardProps) => {
         {children}
       </div>
       <div>
-        <span className="block font-semibold text-sm">{type}</span>
-        {/*TODO: СДЕЛАТЬ КОЛ-ВО ЗАДАЧ В SPAN*/}
+        <span className="block font-semibold text-sm  break-all">{type}</span>
         <span className="block text-xs opacity-35">{taskCount} Tasks</span>
       </div>
     </div>

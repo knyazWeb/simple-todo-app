@@ -9,13 +9,14 @@ type DropdownMenuProps = {
   children: React.ReactNode;
 };
 
-const DropdownMenu = ({
-  isDropdownActive,
-  setIsDropdownActive,
-  children,
-}: DropdownMenuProps) => {
+const DropdownMenu = ({ isDropdownActive, setIsDropdownActive, children }: DropdownMenuProps) => {
   const dropdownRef = useRef<HTMLDivElement>(null);
-  useOnClickOutside(dropdownRef, () => setIsDropdownActive(false));
+  const dropdownMenuRef = useRef<HTMLDivElement>(null);
+  useOnClickOutside(dropdownRef, () => {
+    if (isDropdownActive) {
+      setIsDropdownActive(false);
+    }
+  });
   return (
     <div className="relative flex flex-col gap-0.5 items-end" ref={dropdownRef}>
       <button
@@ -24,13 +25,13 @@ const DropdownMenu = ({
         type="button">
         <IoEllipsisVertical size={18} />
       </button>
-      <Transition in={isDropdownActive} timeout={300}>
+      <Transition nodeRef={dropdownMenuRef} in={isDropdownActive} timeout={200} unmountOnExit={true}>
         {(state) => (
           <div
-            className={`relative  ${
+            ref={dropdownMenuRef}
+            className={`relative ${
               state === "entering" || state === "entered" ? "opacity-100" : "opacity-0"
-            } text-black border-black border rounded-md text-xs  transition-opacity ease-in-out duration-300 flex flex-col items-start overflow-hidden`}
-            >
+            } text-black border-black border rounded-md text-xs  transition-opacity ease-in-out duration-200 flex flex-col items-start overflow-hidden`}>
             {children}
           </div>
         )}

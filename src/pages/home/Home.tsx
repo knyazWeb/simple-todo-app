@@ -26,7 +26,6 @@ const Home = () => {
   };
   if (data) {
     for (const key in data) {
-      console.log(key)
       if (data[key].status === "On going") {
         tasksStatus.onGoing += 1;
       }
