@@ -29,6 +29,10 @@ const Task = ({ id, title, description, date, status }: TaskProps) => {
   const [isModalActive, setIsModalActive] = useState(false);
   const { userId } = useAppSelector(selectUser);
   const [isDropdownActive, setIsDropdownActive] = useState(false);
+  const tagDate = new Date(date).toLocaleDateString("en-GB", {
+    month: "short",
+    day: "numeric",
+  });
   return (
     <>
       <div
@@ -37,7 +41,7 @@ const Task = ({ id, title, description, date, status }: TaskProps) => {
         <h2 className="text-lg leading-none mb-2 mr-6">{title}</h2>
         <p className="text-sm text-gray-600 mb-4 leading-none">{description}</p>
         <div className="flex flex-col justify-center items-start gap-1.5">
-          <DateTag date={date} />
+          <DateTag date={tagDate} />
           <StatusTag status={status} />
         </div>
         {(status === "In process" || status === "On going") && (

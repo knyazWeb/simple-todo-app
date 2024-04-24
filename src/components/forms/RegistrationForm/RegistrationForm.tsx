@@ -91,8 +91,8 @@ const RegistrationForm = () => {
           {...register("password", {
             required: "Create a password",
             minLength: {
-              value: 5,
-              message: "Minimum password length is 5",
+              value: 6,
+              message: "Minimum password length is 6",
             },
           })}
         />

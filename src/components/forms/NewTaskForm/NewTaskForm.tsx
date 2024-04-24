@@ -24,14 +24,13 @@ const NewTaskForm = () => {
       status: "In process",
     },
   });
+  
+  
 
   const submit: SubmitHandler<ITask> = async (data) => {
-    const date = new Date(data.date).toLocaleDateString("en-GB", {
-      month: "short",
-      day: "2-digit",
-    });
+    console.log(data.date)
     const newTask = {
-      date,
+      date: data.date,
       title: data.title,
       description: data.description,
       status: data.status,

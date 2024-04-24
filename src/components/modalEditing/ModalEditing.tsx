@@ -6,7 +6,6 @@ import CustomInput from "../ui/CustomInput/CustomInput";
 import Textarea from "../ui/Textarea/Textarea";
 import ButtonMain from "../ui/Buttons/ButtonMain/ButtonMain";
 import { useAppSelector } from "../../hooks/redux";
-import { useNavigate } from "react-router-dom";
 import { useChangeTaskMutation } from "../../services/TasksService";
 import { selectUser } from "../../store/reducers/authSlice";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -39,12 +38,7 @@ const ModalEditing = ({
   const { userId } = useAppSelector(selectUser);
   const currentYear = new Date().getFullYear();
   //FIXME: СДЕЛАТЬ ПОЛНОЦЕННУЮ ДАТУ НА СЕРВЕРЕ
-  const inputDate = new Date(`${date} ${currentYear}`)
-    .toLocaleDateString()
-    .replace(/\//g, "-")
-    .split("-")
-    .reverse()
-    .join("-");
+  const inputDate = new Date(`${date}`).toISOString().split("T")[0]
   const {
     register,
     watch,
@@ -111,6 +105,7 @@ const ModalEditing = ({
               {errors.description && <p className="text-xs text-red-400">{errors.description.message}</p>}
               <CustomInput
                 type="date"
+                value={inputDate}
                 style={{ color: "rgb(64 64 64)", cursor: "pointer" }}
                 {...register("date", {
                   required: "Choose a date",
