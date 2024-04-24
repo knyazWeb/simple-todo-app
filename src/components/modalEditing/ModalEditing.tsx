@@ -47,6 +47,7 @@ const ModalEditing = ({
     .join("-");
   const {
     register,
+    watch,
     handleSubmit,
     formState: { errors },
   } = useForm<ITask>({
@@ -57,30 +58,32 @@ const ModalEditing = ({
       status: status,
     },
   });
+  const selectedOption = watch("status");
 
   const submit: SubmitHandler<ITask> = async (data) => {
     const date = new Date(data.date).toLocaleDateString("en-GB", {
       month: "short",
       day: "2-digit",
     });
-    const newTask = {
+    const changedTask = {
       date,
       title: data.title,
       description: data.description,
       status: data.status,
     };
+
     if (userId) {
-      await changeTask({ userId, taskId, task: newTask as ITask });
+      await changeTask({ userId, taskId, task: changedTask });
       setIsOpen(false);
     }
   };
   return (
-    <Dialog open={isOpen} onClose={() => setIsOpen(false)} className="">
+    <Dialog open={isOpen} onClose={() => setIsOpen(false)} >
       <div className="fixed inset-0 bg-black/30" aria-hidden="true">
         <div className="fixed inset-0 flex w-full items-center justify-center p-4">
           <Dialog.Panel className={`${css.popup}`}>
-            <div className="flex items-center justify-between">
-              <Dialog.Title className="text-xl font-bold">{mainTitle}</Dialog.Title>
+            <div className="flex items-center justify-between mb-2">
+              <Dialog.Title className="text-xl font-bold ">{mainTitle}</Dialog.Title>
               <ButtonIcon onClick={() => setIsOpen(false)} type="button" color="bg-gray-200" borderRadius="rounded-lg">
                 <RxCross2 color="black" />
               </ButtonIcon>
@@ -97,6 +100,7 @@ const ModalEditing = ({
               />
               {errors.title && <p className="text-xs text-red-400">{errors.title.message}</p>}
               <Textarea
+                rows={3}
                 placeholder="Add your task details"
                 {...register("description", {
                   validate: (value) => {
@@ -118,7 +122,17 @@ const ModalEditing = ({
               />
               {errors.date && <p className="text-xs text-red-400">{errors.date.message}</p>}
 
-              <ButtonMain className="mt-7" type="submit" disabled={false}>
+              <select
+                {...register("status")}
+                className={`border ${selectedOption === "On going" ? "bg-blue-400" : selectedOption === "In process" ? "bg-yellow-500" : selectedOption === "Completed" ? "bg-teal-500" : selectedOption === "Canceled" ? "bg-red-400" : ""} text-white text-center text-xs font-normal pr-1 pl-2 py-1 leading-none rounded-full`}
+                defaultValue={status}>
+                <option value="On going">On going</option>
+                <option value="In process">In process</option>
+                <option value="Completed">Completed</option>
+                <option value="Canceled">Canceled</option>
+              </select>
+
+              <ButtonMain className="mt-4" type="submit" disabled={false}>
                 {isLoading ? "Loading" : "Change task"}
               </ButtonMain>
             </form>

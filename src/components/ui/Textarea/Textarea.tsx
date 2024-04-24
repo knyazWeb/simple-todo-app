@@ -6,7 +6,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, React.HTMLProps<HTMLTextAreaEle
   <textarea
     ref={ref}
     {...props}
-    className={`py-1.5 pl-3 h-28 w-full  text-base rounded-xl border border-solid border-black ${css.shadow} resize-none ${css.scrollbar} `}
+    className={`py-1.5 pl-3  w-full  text-base rounded-xl border border-solid border-black ${css.shadow} resize-none ${css.scrollbar} `}
   />
 ));
 

@@ -37,7 +37,7 @@ const NewTaskForm = () => {
       status: data.status,
     };
     if (userId) {
-      await addTask({ newTask: newTask as ITask, userId });
+      await addTask({ newTask: newTask, userId });
       setTimeout(() => {
         navigate("/");
       }, 1200);
@@ -47,9 +47,7 @@ const NewTaskForm = () => {
   return (
     <>
       {(isSuccess && <Success />) || (isError && <Error />)}
-      <form
-        className="flex justify-center items-start w-full flex-col gap-5"
-        onSubmit={handleSubmit(submit)}>
+      <form className="flex justify-center items-start w-full flex-col gap-5" onSubmit={handleSubmit(submit)}>
         <CustomInput
           type="text"
           placeholder="Task Title"
@@ -61,6 +59,7 @@ const NewTaskForm = () => {
         />
         {errors.title && <p className="text-xs text-red-400">{errors.title.message}</p>}
         <Textarea
+          rows={5}
           placeholder="Add your task details"
           {...register("description", {
             validate: (value) => {
@@ -71,7 +70,7 @@ const NewTaskForm = () => {
         {errors.description && <p className="text-xs text-red-400">{errors.description.message}</p>}
         <CustomInput
           type="date"
-          style={{ color: "rgb(64 64 64)", cursor: "pointer"}}
+          style={{ color: "rgb(64 64 64)", cursor: "pointer" }}
           {...register("date", {
             required: "Choose a date",
             validate: (value) => {

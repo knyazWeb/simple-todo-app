@@ -81,7 +81,7 @@ const Task = ({ id, title, description, date, status }: TaskProps) => {
           </DropdownMenu>
         </div>
       </div>
-      <ModalEditing
+      {isModalActive && <ModalEditing
         isOpen={isModalActive}
         setIsOpen={setIsModalActive}
         mainTitle="Edit task"
@@ -89,7 +89,7 @@ const Task = ({ id, title, description, date, status }: TaskProps) => {
         title={title}
         description={description}
         date={date}
-        status={status}></ModalEditing>
+        status={status} />}
     </>
   );
 };
