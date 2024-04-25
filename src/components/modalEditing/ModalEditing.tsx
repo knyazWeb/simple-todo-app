@@ -8,8 +8,9 @@ import ButtonMain from "../ui/Buttons/ButtonMain/ButtonMain";
 import { useAppSelector } from "../../hooks/redux";
 import { useChangeTaskMutation } from "../../services/TasksService";
 import { selectUser } from "../../store/reducers/authSlice";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { ITask } from "../../store/types/store.types";
+import DatePicker from "react-datepicker";
 
 type ModalEditingProps = {
   isOpen: boolean;
@@ -32,33 +33,27 @@ const ModalEditing = ({
   description,
   status,
   date,
-  children,
 }: ModalEditingProps) => {
   const [changeTask, { isLoading }] = useChangeTaskMutation();
   const { userId } = useAppSelector(selectUser);
-  const currentYear = new Date().getFullYear();
-  //FIXME: СДЕЛАТЬ ПОЛНОЦЕННУЮ ДАТУ НА СЕРВЕРЕ
-  const inputDate = new Date(`${date}`).toISOString().split("T")[0]
   const {
     register,
     watch,
+    control,
     handleSubmit,
     formState: { errors },
   } = useForm<ITask>({
     defaultValues: {
       title: title,
+      date: new Date(date).toISOString().split("T")[0],
       description: description,
-      date: inputDate,
       status: status,
     },
   });
   const selectedOption = watch("status");
-
   const submit: SubmitHandler<ITask> = async (data) => {
-    const date = new Date(data.date).toLocaleDateString("en-GB", {
-      month: "short",
-      day: "2-digit",
-    });
+    const date = new Date(`${data.date}`).toISOString().split("T")[0];
+
     const changedTask = {
       date,
       title: data.title,
@@ -72,7 +67,7 @@ const ModalEditing = ({
     }
   };
   return (
-    <Dialog open={isOpen} onClose={() => setIsOpen(false)} >
+    <Dialog open={isOpen} onClose={() => setIsOpen(false)}>
       <div className="fixed inset-0 bg-black/30" aria-hidden="true">
         <div className="fixed inset-0 flex w-full items-center justify-center p-4">
           <Dialog.Panel className={`${css.popup}`}>
@@ -82,8 +77,9 @@ const ModalEditing = ({
                 <RxCross2 color="black" />
               </ButtonIcon>
             </div>
-            <form className="flex justify-center items-start w-full flex-col gap-5" onSubmit={handleSubmit(submit)}>
+            <form className="flex justify-center items-start w-full flex-col" onSubmit={handleSubmit(submit)}>
               <CustomInput
+                style={{ marginBottom: errors.title ? "10px" : "15px" }}
                 type="text"
                 placeholder="Task Title"
                 {...register("title", {
@@ -92,8 +88,10 @@ const ModalEditing = ({
                   },
                 })}
               />
-              {errors.title && <p className="text-xs text-red-400">{errors.title.message}</p>}
+              {errors.title && <p className="text-xs text-red-400 mb-3">{errors.title.message}</p>}
+
               <Textarea
+                style={{ marginBottom: errors.description ? "10px" : "20px" }}
                 rows={3}
                 placeholder="Add your task details"
                 {...register("description", {
@@ -102,24 +100,30 @@ const ModalEditing = ({
                   },
                 })}
               />
-              {errors.description && <p className="text-xs text-red-400">{errors.description.message}</p>}
-              <CustomInput
-                type="date"
-                value={inputDate}
-                style={{ color: "rgb(64 64 64)", cursor: "pointer" }}
-                {...register("date", {
+              {errors.description && <p className="text-xs text-red-400 mb-3">{errors.description.message}</p>}
+              <Controller
+                control={control}
+                name="date"
+                rules={{
                   required: "Choose a date",
                   validate: (value) => {
-                    const currentYear = value.split("-")[0];
-                    return (currentYear.length === 4 && +currentYear[0] === 2) || "Choose a correct date";
+                    const currentYear = new Date(value).getFullYear();
+                    return (currentYear >= 2000 && currentYear <= 2099) || "Choose a correct date";
                   },
-                })}
+                }}
+                render={({ field }) => (
+                  <DatePicker
+                    selected={field.value ? new Date(field.value) : null}
+                    onChange={(date) => field.onChange(date)}
+                    dateFormat="d-MM-yyyy"
+                  />
+                )}
               />
               {errors.date && <p className="text-xs text-red-400">{errors.date.message}</p>}
 
               <select
                 {...register("status")}
-                className={`border ${selectedOption === "On going" ? "bg-blue-400" : selectedOption === "In process" ? "bg-yellow-500" : selectedOption === "Completed" ? "bg-teal-500" : selectedOption === "Canceled" ? "bg-red-400" : ""} text-white text-center text-xs font-normal pr-1 pl-2 py-1 leading-none rounded-full`}
+                className={`border ${selectedOption === "On going" ? "bg-blue-400" : selectedOption === "In process" ? "bg-yellow-500" : selectedOption === "Completed" ? "bg-teal-500" : selectedOption === "Canceled" ? "bg-red-400" : ""} text-white text-center text-xs font-normal pr-1 pl-2 py-1 leading-none rounded-full mt-2`}
                 defaultValue={status}>
                 <option value="On going">On going</option>
                 <option value="In process">In process</option>

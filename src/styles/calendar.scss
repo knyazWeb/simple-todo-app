@@ -1,0 +1,23 @@
+@import 'react-datepicker/dist/react-datepicker.css';
+
+.react-datepicker__input-container input {
+  outline: 0;
+  box-shadow: 0px 13px 4px -9px rgba(0, 0, 0, 0.82);
+  @apply py-1.5 pl-3 w-full text-base rounded-xl border border-solid border-black mb-2;
+}
+
+.react-datepicker__day--selected {
+  background-color: rgb(248, 88, 88) !important;
+}
+
+.react-datepicker {
+  border: 1px solid rgb(248, 88, 88) !important;
+}
+
+.react-datepicker-popper .react-datepicker__triangle {
+  stroke: rgb(248, 88, 88) !important;
+}
+  
+.react-datepicker__day:hover, .react-datepicker__month-text:hover, .react-datepicker__quarter-text:hover, .react-datepicker__year-text:hover {
+  background-color: rgba(248, 88, 88, 0.5) !important;
+}
