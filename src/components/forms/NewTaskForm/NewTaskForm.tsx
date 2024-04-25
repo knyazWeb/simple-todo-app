@@ -1,4 +1,4 @@
-import { SubmitHandler, useForm } from "react-hook-form";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../../hooks/redux.ts";
 import { useAddTaskMutation } from "../../../services/TasksService.ts";
@@ -9,6 +9,7 @@ import Success from "../../success/Success.tsx";
 import ButtonMain from "../../ui/Buttons/ButtonMain/ButtonMain";
 import CustomInput from "../../ui/CustomInput/CustomInput.tsx";
 import Textarea from "../../ui/Textarea/Textarea";
+import DatePicker from "react-datepicker";
 
 const NewTaskForm = () => {
   const navigate = useNavigate();
@@ -16,6 +17,7 @@ const NewTaskForm = () => {
   const { userId } = useAppSelector(selectUser);
   const {
     register,
+    control,
     handleSubmit,
     formState: { errors },
   } = useForm<ITask>({
@@ -26,10 +28,7 @@ const NewTaskForm = () => {
   });
 
   const submit: SubmitHandler<ITask> = async (data) => {
-    const date = new Date(data.date).toLocaleDateString("en-GB", {
-      month: "short",
-      day: "2-digit",
-    });
+    const date = new Date(data.date).toISOString().split("T")[0];
     const newTask = {
       date,
       title: data.title,
@@ -47,8 +46,9 @@ const NewTaskForm = () => {
   return (
     <>
       {(isSuccess && <Success />) || (isError && <Error />)}
-      <form className="flex justify-center items-start w-full flex-col gap-5" onSubmit={handleSubmit(submit)}>
+      <form className="flex justify-center items-start w-full flex-col" onSubmit={handleSubmit(submit)}>
         <CustomInput
+          style={{ marginBottom: errors.title ? "10px" : "20px" }}
           type="text"
           placeholder="Task Title"
           {...register("title", {
@@ -57,8 +57,9 @@ const NewTaskForm = () => {
             },
           })}
         />
-        {errors.title && <p className="text-xs text-red-400">{errors.title.message}</p>}
+        {errors.title && <p className="text-xs text-red-400 mb-3">{errors.title.message}</p>}
         <Textarea
+          style={{ marginBottom: errors.description ? "10px" : "20px" }}
           rows={5}
           placeholder="Add your task details"
           {...register("description", {
@@ -67,17 +68,24 @@ const NewTaskForm = () => {
             },
           })}
         />
-        {errors.description && <p className="text-xs text-red-400">{errors.description.message}</p>}
-        <CustomInput
-          type="date"
-          style={{ color: "rgb(64 64 64)", cursor: "pointer" }}
-          {...register("date", {
+        {errors.description && <p className="text-xs text-red-400 mb-3">{errors.description.message}</p>}
+        <Controller
+          control={control}
+          name="date"
+          rules={{
             required: "Choose a date",
             validate: (value) => {
-              const currentYear = value.split("-")[0];
-              return (currentYear.length === 4 && +currentYear[0] === 2) || "Choose a correct date";
+              const currentYear = new Date(value).getFullYear();
+              return (currentYear >= 2000 && currentYear <= 2099) || "Choose a correct date";
             },
-          })}
+          }}
+          render={({ field }) => (
+            <DatePicker
+              selected={field.value ? new Date(field.value) : null}
+              onChange={(date) => field.onChange(date)}
+              dateFormat="d-MM-yyyy"
+            />
+          )}
         />
         {errors.date && <p className="text-xs text-red-400">{errors.date.message}</p>}
 
