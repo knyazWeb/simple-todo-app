@@ -11,6 +11,7 @@ import { selectUser } from "../../store/reducers/authSlice";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { ITask } from "../../store/types/store.types";
 import DatePicker from "react-datepicker";
+import { regDate } from "../forms/regDate";
 
 type ModalEditingProps = {
   isOpen: boolean;
@@ -53,7 +54,6 @@ const ModalEditing = ({
   const selectedOption = watch("status");
   const submit: SubmitHandler<ITask> = async (data) => {
     const date = new Date(`${data.date}`).toISOString().split("T")[0];
-
     const changedTask = {
       date,
       title: data.title,
@@ -106,6 +106,10 @@ const ModalEditing = ({
                 name="date"
                 rules={{
                   required: "Choose a date",
+                  pattern: {
+                    value: regDate,
+                    message: "Choose a correct date",
+                  },
                   validate: (value) => {
                     const currentYear = new Date(value).getFullYear();
                     return (currentYear >= 2000 && currentYear <= 2099) || "Choose a correct date";
@@ -114,8 +118,16 @@ const ModalEditing = ({
                 render={({ field }) => (
                   <DatePicker
                     selected={field.value ? new Date(field.value) : null}
-                    onChange={(date) => field.onChange(date)}
+                    onChange={(date) => {
+                      field.onChange(date);
+                    }}
+                    onFocus={(e) => {
+                      e.target.readOnly = true;
+                      e.target.blur();
+                    }}
                     dateFormat="d-MM-yyyy"
+                    placeholderText="dd-mm-yyyy"
+                    fixedHeight
                   />
                 )}
               />
@@ -123,8 +135,7 @@ const ModalEditing = ({
 
               <select
                 {...register("status")}
-                className={`border ${selectedOption === "On going" ? "bg-blue-400" : selectedOption === "In process" ? "bg-yellow-500" : selectedOption === "Completed" ? "bg-teal-500" : selectedOption === "Canceled" ? "bg-red-400" : ""} text-white text-center text-xs font-normal pr-1 pl-2 py-1 leading-none rounded-full mt-2`}
-                defaultValue={status}>
+                className={`border ${selectedOption === "On going" ? "bg-blue-400" : selectedOption === "In process" ? "bg-yellow-500" : selectedOption === "Completed" ? "bg-teal-500" : selectedOption === "Canceled" ? "bg-red-400" : ""} text-white text-center text-xs font-normal pr-1 pl-2 py-1 leading-none rounded-full mt-2`}>
                 <option value="On going">On going</option>
                 <option value="In process">In process</option>
                 <option value="Completed">Completed</option>

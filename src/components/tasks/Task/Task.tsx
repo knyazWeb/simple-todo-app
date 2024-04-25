@@ -22,13 +22,14 @@ type TaskProps = {
 };
 
 const Task = ({ id, title, description, date, status }: TaskProps) => {
-  const [removeTask, { isLoading: removeIsLoading, isSuccess: removeIsSuccess }] =
-    useRemoveTaskMutation();
-  const [changeTask, { isLoading: changeIsLoading, isSuccess: changeIsSuccess }] =
-    useChangeTaskMutation();
+  const [removeTask, { isLoading: removeIsLoading, isSuccess: removeIsSuccess }] = useRemoveTaskMutation();
+  const [changeTask, { isLoading: changeIsLoading, isSuccess: changeIsSuccess }] = useChangeTaskMutation();
+  const dateToday = new Date().toISOString().split("T")[0];
   const [isModalActive, setIsModalActive] = useState(false);
   const { userId } = useAppSelector(selectUser);
   const [isDropdownActive, setIsDropdownActive] = useState(false);
+
+
   const tagDate = new Date(date).toLocaleDateString("en-GB", {
     month: "short",
     day: "numeric",
@@ -47,9 +48,7 @@ const Task = ({ id, title, description, date, status }: TaskProps) => {
         {(status === "In process" || status === "On going") && (
           <div className={`flex justify-center items-center absolute bottom-1.5 right-1.5 `}>
             <ButtonDone
-              onClick={() =>
-                changeTask({ userId, taskId: id, task: { status: "Completed" } as ITask })
-              }
+              onClick={() => changeTask({ userId, taskId: id, task: { status: "Completed" } as ITask })}
               status={status}
               isLoading={changeIsLoading}
               isSuccess={changeIsSuccess}
@@ -58,9 +57,7 @@ const Task = ({ id, title, description, date, status }: TaskProps) => {
         )}
 
         <div className="absolute top-1.5 right-1.5">
-          <DropdownMenu
-            isDropdownActive={isDropdownActive}
-            setIsDropdownActive={setIsDropdownActive}>
+          <DropdownMenu isDropdownActive={isDropdownActive} setIsDropdownActive={setIsDropdownActive}>
             <button
               onClick={() => {
                 setIsDropdownActive(false);
@@ -85,15 +82,18 @@ const Task = ({ id, title, description, date, status }: TaskProps) => {
           </DropdownMenu>
         </div>
       </div>
-      {isModalActive && <ModalEditing
-        isOpen={isModalActive}
-        setIsOpen={setIsModalActive}
-        mainTitle="Edit task"
-        taskId={id}
-        title={title}
-        description={description}
-        date={date}
-        status={status} />}
+      {isModalActive && (
+        <ModalEditing
+          isOpen={isModalActive}
+          setIsOpen={setIsModalActive}
+          mainTitle="Edit task"
+          taskId={id}
+          title={title}
+          description={description}
+          date={date}
+          status={status}
+        />
+      )}
     </>
   );
 };

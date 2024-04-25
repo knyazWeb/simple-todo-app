@@ -74,7 +74,6 @@ const Home = () => {
           {dataTasksKeys &&
             dataTasksKeys.map((key) => {
               const task = data[key];
-
               return (
                 <Task
                   key={key}
