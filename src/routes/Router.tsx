@@ -6,6 +6,7 @@ import Login from "../pages/login/Login.tsx";
 import NewTask from "../pages/newTask/NewTask.tsx";
 import Registration from "../pages/registration /Registration.tsx";
 import RequireAuth from "../pages/requireAuth/RequireAuth.tsx";
+import Profile from "../pages/profile/Profile.tsx";
 
 export const Router = () => (
   <Routes>
@@ -15,6 +16,7 @@ export const Router = () => (
         <Route index element={<Home />} />
         <Route path="/createTask" element={<NewTask />} />
         <Route path="/completed" element={<Completed />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Route>
     </Route>
