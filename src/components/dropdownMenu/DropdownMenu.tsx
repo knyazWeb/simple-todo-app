@@ -21,7 +21,7 @@ const DropdownMenu = ({ isDropdownActive, setIsDropdownActive, children }: Dropd
     <div className="relative flex flex-col gap-0.5 items-end" ref={dropdownRef}>
       <button
         onClick={() => setIsDropdownActive(!isDropdownActive)}
-        className="w-6 h-6 flex justify-center items-center rounded-md bg-gray-200 hover:brightness-95 ease-in-out duration-300"
+        className="w-6 h-6 flex justify-center items-center border border-gray-400 rounded-md bg-gray-200 hover:brightness-95 ease-in-out duration-300"
         type="button">
         <IoEllipsisVertical size={18} />
       </button>

@@ -108,6 +108,10 @@ const NewTaskForm = () => {
 
         <select
           {...register("status")}
+          onChange={(e) => {
+            register("status").onChange(e); 
+            e.currentTarget.blur()
+          }}
           className={`border ${selectedOption === "On going" ? "bg-blue-400" : selectedOption === "In process" ? "bg-yellow-500" : selectedOption === "Completed" ? "bg-teal-500" : selectedOption === "Canceled" ? "bg-red-400" : ""} text-white text-center text-xs font-normal pr-1 pl-2 py-1 leading-none rounded-full mt-2`}>
           <option value="On going">On going</option>
           <option value="In process">In process</option>

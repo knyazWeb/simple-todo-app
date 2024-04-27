@@ -10,8 +10,7 @@ import DateTag from "../../ui/Tags/DateTag/DateTag.tsx";
 import StatusTag from "../../ui/Tags/StatusTag/StatusTag.tsx";
 import css from "./Task.module.scss";
 import ButtonDone from "../../ui/Buttons/ButtonDone/ButtonDone.tsx";
-import ModalEditing from "../../modalEditing/ModalEditing.tsx";
-import { set } from "react-hook-form";
+import ModalEditing from "../../modalEditing/ModalEditing.tsx"; 
 
 type TaskProps = {
   id: string;
@@ -19,12 +18,12 @@ type TaskProps = {
   description: string;
   date: string;
   status: ITask["status"];
+  bgColor?: string;
 };
 
-const Task = ({ id, title, description, date, status }: TaskProps) => {
+const Task = ({ id, title, description, date, status, bgColor }: TaskProps) => {
   const [removeTask, { isLoading: removeIsLoading, isSuccess: removeIsSuccess }] = useRemoveTaskMutation();
   const [changeTask, { isLoading: changeIsLoading, isSuccess: changeIsSuccess }] = useChangeTaskMutation();
-  const dateToday = new Date().toISOString().split("T")[0];
   const [isModalActive, setIsModalActive] = useState(false);
   const { userId } = useAppSelector(selectUser);
   const [isDropdownActive, setIsDropdownActive] = useState(false);
@@ -38,7 +37,7 @@ const Task = ({ id, title, description, date, status }: TaskProps) => {
     <>
       <div
         style={{ boxShadow: "0px 11px 4px -7px rgba(0, 0, 0, 1)" }}
-        className={`relative w-full flex flex-col bg-white border-black border rounded-md p-3 break-words shadow-black shadow overflow-hidden ${removeIsLoading ? css.delete : ""} ${removeIsSuccess ? "hidden" : ""}`}>
+        className={`relative w-full flex flex-col ${bgColor ? bgColor : 'bg-white'} border-black border rounded-md p-3 break-words shadow-black shadow overflow-hidden ${removeIsLoading ? css.delete : ""} ${removeIsSuccess ? "hidden" : ""}`}>
         <h2 className="text-lg leading-none mb-2 mr-6">{title}</h2>
         <p className="text-sm text-gray-600 mb-4 leading-none">{description}</p>
         <div className="flex flex-col justify-center items-start gap-1.5">

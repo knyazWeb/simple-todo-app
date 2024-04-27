@@ -20,7 +20,7 @@ const Completed = () => {
         <ButtonIcon onClick={() => navigate("/")} type="button" color="bg-gray-200" borderRadius="rounded-lg">
           <IoIosArrowBack size={25} />
         </ButtonIcon>
-        <h1 className="text-start text-3xl font-semibold mb-4 mt-3">Completed tasks</h1>
+        <h1 className="text-center text-3xl font-medium mb-4 mt-3">Completed tasks</h1>
         <div className="flex flex-col gap-4">
           {isLoading && <Loading />}
 
@@ -35,10 +35,11 @@ const Completed = () => {
                     date={task.date}
                     description={task.description}
                     status={task.status}
+                    bgColor="bg-teal-200 bg-opacity-40"
                   />
                 );
               })
-            : isLoading || <p className="text-center text-2xl">No completed tasks</p>}
+            : isLoading || <p className="text-center text-xl">No completed tasks</p>}
         </div>
       </div>
     </>
