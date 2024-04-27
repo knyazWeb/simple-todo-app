@@ -9,7 +9,7 @@ const UserHeader = () => {
       <Avatar />
       <div>
         <span className="text-2xl font-bold block">
-          Hi, <span className="capitalize">{userName}</span> &#x1F44B;
+          Hi, <span className="capitalize break-all">{userName}</span> &#x1F44B;
         </span>
         <span className="block text-gray-400 text-sm">Your daily adventure starts now</span>
       </div>

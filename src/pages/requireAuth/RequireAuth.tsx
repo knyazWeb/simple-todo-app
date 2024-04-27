@@ -8,8 +8,7 @@ const RequireAuth = () => {
   const token = localStorage.getItem("token") ?? "";
   const {isAuth, userId}= useAppSelector(selectUser)
   const dispatch = useAppDispatch();
-  const { isLoading, isError } = useGetUserQuery(token, { skip: !token || !!userId || !!isAuth });
-  
+  const {isLoading, isError } = useGetUserQuery(token, { skip: !token || !!userId || !!isAuth });
   if (isLoading) {
     return <Loading />
   } else if (isError) {

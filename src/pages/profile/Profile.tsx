@@ -1,37 +1,31 @@
-import { IoIosArrowBack } from "react-icons/io";
-import ButtonIcon from "../../components/ui/Buttons/ButtonIcon/ButtonIcon";
-import { useNavigate } from "react-router-dom";
-import { useGetTasksQuery } from "../../services/TasksService";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { logout, selectUser } from "../../store/reducers/authSlice";
-import Avatar from "../../components/ui/Avatar/Avatar";
-import ButtonMain from "../../components/ui/Buttons/ButtonMain/ButtonMain";
-import ProfileCard from "../../components/profileCard/ProfileCard";
-import { IoMdNotificationsOutline } from "react-icons/io";
+import { useState } from "react";
 import { AiOutlineSafetyCertificate } from "react-icons/ai";
+import { BsQuestionOctagon } from "react-icons/bs";
 import { CiGlobe } from "react-icons/ci";
 import { GoVerified } from "react-icons/go";
-import { BsQuestionOctagon } from "react-icons/bs";
+import { IoIosArrowBack, IoMdNotificationsOutline } from "react-icons/io";
 import { IoExitOutline } from "react-icons/io5";
-import { useState } from "react";
-import ModalConfirm from "../../components/modalConfirm/ModalConfirm";
+import { useNavigate } from "react-router-dom";
+import ModalConfirm from "../../components/modals/modalConfirm/ModalConfirm";
+import ProfileCard from "../../components/profileCard/ProfileCard";
+import Avatar from "../../components/ui/Avatar/Avatar";
+import ButtonIcon from "../../components/ui/Buttons/ButtonIcon/ButtonIcon";
+import ButtonMain from "../../components/ui/Buttons/ButtonMain/ButtonMain";
+import { useAppSelector } from "../../hooks/redux";
+import { useGetTasksQuery } from "../../services/TasksService";
+import { selectUser } from "../../store/reducers/authSlice";
+import ModalEditProfile from "../../components/modals/modalEditProfile/ModalEditProfile";
 
-
-
-
-
-
-
-
-type ProfileProps = {};
 
 const Profile = () => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   const { isAuth, userId, userName } = useAppSelector(selectUser);
-  const { data, isLoading, isError } = useGetTasksQuery(userId, { skip: !isAuth });
+  
+  const { data } = useGetTasksQuery(userId, { skip: !isAuth });
   const [showExitConfirm, setShowExitConfirm] = useState(false)
+  const [showEditProfile, setShowEditProfile] = useState(false)
   const rank = "Beginner";
+
   const tasksStatus = {
     inProcess: 0,
     completed: 0,
@@ -46,6 +40,8 @@ const Profile = () => {
       }
     }
   }
+  
+ 
 
   return (
     <div className="w-full pb-20 flex flex-col">
@@ -75,7 +71,7 @@ const Profile = () => {
           <span className="bg-gray-200 py-1 px-5 text-gray-500 rounded-lg">{rank}</span>
         </div>
         <div className="w-fit">
-          <ButtonMain sizePadding={"px-6 py-2"} type="button" disabled={false}>
+          <ButtonMain onClick={() => setShowEditProfile(true)} sizePadding={"px-6 py-2"} type="button" disabled={false}>
             Edit Profile
           </ButtonMain>
         </div>
@@ -88,6 +84,9 @@ const Profile = () => {
         <ProfileCard IconSVG={BsQuestionOctagon} name="Help center" />
         <ProfileCard IconSVG={IoExitOutline} name="Exit" onClick={() => setShowExitConfirm(true)} />
       </div>
+      {showEditProfile && (
+        <ModalEditProfile mainTitle="Edit profile name" isOpen={showEditProfile} setIsOpen={setShowEditProfile} />
+      )}
       {showExitConfirm && (
         <ModalConfirm mainTitle="Do you want to leave?" isOpen={showExitConfirm} setIsOpen={setShowExitConfirm} />
       )}

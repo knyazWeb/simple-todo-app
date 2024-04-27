@@ -24,22 +24,25 @@ const authSlice = createSlice({
       localStorage.removeItem("token");
       localStorage.removeItem("refreshToken");
     },
+    updateUserName: (state, action: PayloadAction<string>) => {
+      state.userName = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addMatcher(authApi.endpoints.signUp.matchFulfilled, (_state, action) => {
       if (action.payload.idToken && action.payload.refreshToken) {
         localStorage.setItem("token", action.payload.idToken);
         localStorage.setItem("refreshToken", action.payload.refreshToken);
-        
       }
     }),
-    builder.addMatcher(authApi.endpoints.getUser.matchFulfilled, (state, action) => {
-      if (action.payload.users && action.payload.users.length) {
-        state.userName = action.payload.users[0].displayName;
-        state.isAuth = true;
-        state.userId = action.payload.users[0].localId;
-      }
-    });
+      builder.addMatcher(authApi.endpoints.getUser.matchFulfilled, (state, action) => {
+        if (action.payload.users && action.payload.users.length) {
+          state.userName = action.payload.users[0].displayName;
+          state.isAuth = true;
+          state.userId = action.payload.users[0].localId;
+        }
+        console.log(action.payload.users[0].displayName);
+      });
     builder.addMatcher(authApi.endpoints.signIn.matchFulfilled, (_state, action) => {
       if (action.payload.idToken && action.payload.refreshToken) {
         localStorage.setItem("token", action.payload.idToken);
@@ -51,13 +54,11 @@ const authSlice = createSlice({
 
 export default authSlice.reducer;
 
-export const { login, logout } = authSlice.actions;
-
-
+export const { login, logout, updateUserName } = authSlice.actions;
 
 export const selectUser = createSelector(
   (state: RootState) => state.auth.userName,
   (state: RootState) => state.auth.isAuth,
   (state: RootState) => state.auth.userId,
-  (userName, isAuth, userId) => ({userName, isAuth, userId})
+  (userName, isAuth, userId) => ({ userName, isAuth, userId })
 );

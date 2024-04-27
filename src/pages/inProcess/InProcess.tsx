@@ -36,7 +36,7 @@ const InProcess = () => {
                   date={task.date}
                   description={task.description}
                   status={task.status}
-                  bgColor="bg-yellow-200 bg-opacity-40"
+                  bgColor="bg-yellow-100 bg-opacity-40"
                 />
               );
             })

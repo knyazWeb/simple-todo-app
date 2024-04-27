@@ -34,7 +34,7 @@ const Completed = () => {
                   date={task.date}
                   description={task.description}
                   status={task.status}
-                  bgColor="bg-teal-200 bg-opacity-40"
+                  bgColor="bg-teal-100 bg-opacity-40"
                 />
               );
             })

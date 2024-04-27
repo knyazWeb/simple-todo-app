@@ -10,6 +10,7 @@ import OnGoing from "../pages/onGoing/OnGoing.tsx";
 import Profile from "../pages/profile/Profile.tsx";
 import Registration from "../pages/registration /Registration.tsx";
 import RequireAuth from "../pages/requireAuth/RequireAuth.tsx";
+import Calendar from "../pages/calendar/Calendar.tsx";
 
 export const Router = () => (
   <Routes>
@@ -18,6 +19,7 @@ export const Router = () => (
     <Route path="/" element={<RequireAuth />}>
       <Route element={<Layout />}>
         <Route index element={<Home />} />
+        <Route path="/calendar" element={<Calendar />} />
         <Route path="/createTask" element={<NewTask />} />
         <Route path="/ongoing" element={<OnGoing />} />
         <Route path="/inprocess" element={<InProcess />} />

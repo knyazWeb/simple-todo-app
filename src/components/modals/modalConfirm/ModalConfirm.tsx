@@ -1,10 +1,10 @@
 import { Dialog } from "@headlessui/react";
-import ButtonIcon from "../ui/Buttons/ButtonIcon/ButtonIcon";
 import { RxCross2 } from "react-icons/rx";
-import css from './ModalConfirm.module.scss'
-import ButtonMain from "../ui/Buttons/ButtonMain/ButtonMain";
-import { useAppDispatch } from "../../hooks/redux";
-import { logout } from "../../store/reducers/authSlice";
+import { useAppDispatch } from "../../../hooks/redux";
+import { logout } from "../../../store/reducers/authSlice";
+import ButtonIcon from "../../ui/Buttons/ButtonIcon/ButtonIcon";
+import ButtonMain from "../../ui/Buttons/ButtonMain/ButtonMain";
+import css from './ModalConfirm.module.scss';
 
 type ModalConfirmProps = {
   isOpen: boolean;

@@ -1,17 +1,17 @@
 import { Dialog } from "@headlessui/react";
-import css from "./ModalEditing.module.scss";
-import ButtonIcon from "../ui/Buttons/ButtonIcon/ButtonIcon";
-import { RxCross2 } from "react-icons/rx";
-import CustomInput from "../ui/CustomInput/CustomInput";
-import Textarea from "../ui/Textarea/Textarea";
-import ButtonMain from "../ui/Buttons/ButtonMain/ButtonMain";
-import { useAppSelector } from "../../hooks/redux";
-import { useChangeTaskMutation } from "../../services/TasksService";
-import { selectUser } from "../../store/reducers/authSlice";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { ITask } from "../../store/types/store.types";
 import DatePicker from "react-datepicker";
-import { regDate } from "../forms/regDate";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { RxCross2 } from "react-icons/rx";
+import { useAppSelector } from "../../../hooks/redux";
+import { useChangeTaskMutation } from "../../../services/TasksService";
+import { selectUser } from "../../../store/reducers/authSlice";
+import { ITask } from "../../../store/types/store.types";
+import { regDate } from "../../forms/regDate";
+import ButtonIcon from "../../ui/Buttons/ButtonIcon/ButtonIcon";
+import ButtonMain from "../../ui/Buttons/ButtonMain/ButtonMain";
+import CustomInput from "../../ui/CustomInput/CustomInput";
+import Textarea from "../../ui/Textarea/Textarea";
+import css from "./ModalEditing.module.scss";
 
 type ModalEditingProps = {
   isOpen: boolean;

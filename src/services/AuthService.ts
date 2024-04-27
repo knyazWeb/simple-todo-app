@@ -61,6 +61,7 @@ export const authApi = createApi({
           idToken: token,
         },
       }),
+      providesTags: ["Auth"],
     }),
     updateName: builder.mutation<signUpCredentialsWithName, { name: string; idToken: string }>({
       query: ({ name, idToken }) => ({
@@ -72,6 +73,7 @@ export const authApi = createApi({
           returnSecureToken: true,
         },
       }),
+      invalidatesTags: ["Auth"],
     }),
   }),
 });

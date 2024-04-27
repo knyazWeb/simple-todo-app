@@ -6,11 +6,11 @@ import { useChangeTaskMutation, useRemoveTaskMutation } from "../../../services/
 import { selectUser } from "../../../store/reducers/authSlice.ts";
 import { ITask } from "../../../store/types/store.types.ts";
 import DropdownMenu from "../../dropdownMenu/DropdownMenu.tsx";
+import ModalEditing from "../../modals/modalEditing/ModalEditing.tsx";
+import ButtonDone from "../../ui/Buttons/ButtonDone/ButtonDone.tsx";
 import DateTag from "../../ui/Tags/DateTag/DateTag.tsx";
 import StatusTag from "../../ui/Tags/StatusTag/StatusTag.tsx";
 import css from "./Task.module.scss";
-import ButtonDone from "../../ui/Buttons/ButtonDone/ButtonDone.tsx";
-import ModalEditing from "../../modalEditing/ModalEditing.tsx"; 
 
 type TaskProps = {
   id: string;
