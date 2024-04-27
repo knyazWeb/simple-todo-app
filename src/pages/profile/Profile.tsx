@@ -2,8 +2,8 @@ import { IoIosArrowBack } from "react-icons/io";
 import ButtonIcon from "../../components/ui/Buttons/ButtonIcon/ButtonIcon";
 import { useNavigate } from "react-router-dom";
 import { useGetTasksQuery } from "../../services/TasksService";
-import { useAppSelector } from "../../hooks/redux";
-import { selectUser } from "../../store/reducers/authSlice";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { logout, selectUser } from "../../store/reducers/authSlice";
 import Avatar from "../../components/ui/Avatar/Avatar";
 import ButtonMain from "../../components/ui/Buttons/ButtonMain/ButtonMain";
 import ProfileCard from "../../components/profileCard/ProfileCard";
@@ -13,6 +13,8 @@ import { CiGlobe } from "react-icons/ci";
 import { GoVerified } from "react-icons/go";
 import { BsQuestionOctagon } from "react-icons/bs";
 import { IoExitOutline } from "react-icons/io5";
+import { useState } from "react";
+import ModalConfirm from "../../components/modalConfirm/ModalConfirm";
 
 
 
@@ -25,8 +27,10 @@ type ProfileProps = {};
 
 const Profile = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const { isAuth, userId, userName } = useAppSelector(selectUser);
   const { data, isLoading, isError } = useGetTasksQuery(userId, { skip: !isAuth });
+  const [showExitConfirm, setShowExitConfirm] = useState(false)
   const rank = "Beginner";
   const tasksStatus = {
     inProcess: 0,
@@ -77,13 +81,16 @@ const Profile = () => {
         </div>
       </div>
       <div className="flex flex-col items-center gap-3">
-        <ProfileCard IconSVG={IoMdNotificationsOutline} name="Notifications" onClick={() => 1} />
-        <ProfileCard IconSVG={AiOutlineSafetyCertificate} name="Security" onClick={() => 1} />
-        <ProfileCard IconSVG={CiGlobe} name="Language and Region" onClick={() => 1} />
-        <ProfileCard IconSVG={GoVerified} name="Go Premium" onClick={() => 1} />
-        <ProfileCard IconSVG={BsQuestionOctagon} name="Help center" onClick={() => 1} />
-        <ProfileCard IconSVG={IoExitOutline} name="Exit" onClick={() => 1} />
+        <ProfileCard IconSVG={IoMdNotificationsOutline} name="Notifications" />
+        <ProfileCard IconSVG={AiOutlineSafetyCertificate} name="Security" />
+        <ProfileCard IconSVG={CiGlobe} name="Language and Region" />
+        <ProfileCard IconSVG={GoVerified} name="Go Premium" />
+        <ProfileCard IconSVG={BsQuestionOctagon} name="Help center" />
+        <ProfileCard IconSVG={IoExitOutline} name="Exit" onClick={() => setShowExitConfirm(true)} />
       </div>
+      {showExitConfirm && (
+        <ModalConfirm mainTitle="Do you want to leave?" isOpen={showExitConfirm} setIsOpen={setShowExitConfirm} />
+      )}
     </div>
   );
 };
