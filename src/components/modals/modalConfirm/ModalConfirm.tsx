@@ -17,7 +17,7 @@ const ModalConfirm = ({ isOpen, setIsOpen, mainTitle }: ModalConfirmProps) => {
   return (
     <Dialog open={isOpen} onClose={() => setIsOpen(false)}>
       <div className="fixed inset-0 bg-black/30" aria-hidden="true">
-        <div className="fixed inset-0 flex w-full items-center justify-center pr-4">
+      <div className="fixed inset-0 flex w-full items-center justify-center no-touch:pr-4">
           <Dialog.Panel className={`${css.popup}`}>
             <div className="flex items-center justify-between mb-4">
               <Dialog.Title className="text-xl font-bold ">{mainTitle}</Dialog.Title>
