@@ -75,6 +75,10 @@ input::-webkit-datetime-edit-year-field:focus {
   }
 }
 
+html {
+  overflow-y: scroll;
+}
+
 body {
   font-family: "Roboto";
   font-weight: 400;
@@ -84,5 +88,6 @@ body {
   max-width: 320px;
   margin: 48px auto 0;
   scroll-behavior: smooth;
-  overflow-y: scroll;
+  
+  
 }

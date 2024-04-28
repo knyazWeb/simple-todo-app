@@ -51,11 +51,11 @@ const Calendar = () => {
   useEffect(() => {
     const { day, month, year } = {
       day: selectedDayItem.name,
-      month: selectedMonthItem.name,
+      month: selectedMonthItem.id,
       year: selectedYearItem.name,
     };
     if (isValidDate(+selectedYearItem.name, selectedMonthItem.id, selectedDayItem.id)) {
-      setVisibleDate(new Date(`${year} ${month} ${day}`));
+      setVisibleDate(new Date(`${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`));
     }
   }, [selectedDayItem, selectedMonthItem, selectedYearItem]);
 
