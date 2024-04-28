@@ -1,4 +1,4 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import Loading from "../../components/loading/Loading.tsx";
 import Task from "../../components/tasks/Task/Task.tsx";
 import { useAppSelector } from "../../hooks/redux.ts";
@@ -16,7 +16,7 @@ import { LuFileX } from "react-icons/lu";
 const Home = () => {
   const { isAuth, userId } = useAppSelector(selectUser);
   const { data, isLoading, isError } = useGetTasksQuery(userId, { skip: !isAuth });
-
+  const navigate = useNavigate();
   const dataTasksKeys = data && Object.keys(data).slice(-3).reverse();
   const tasksStatus = {
     onGoing: 0,
@@ -55,16 +55,32 @@ const Home = () => {
         <UserHeader />
       </div>
       <div className="grid grid-cols-2 grid-rows-2 gap-3 mb-7">
-        <Card bgColor="bg-blue-400" type="On going" taskCount={tasksStatus.onGoing}>
+        <Card
+          onClick={() => navigate("/ongoing")}
+          bgColor="bg-blue-400"
+          type="On going"
+          taskCount={tasksStatus.onGoing}>
           <VscSync size={20} color="white" />
         </Card>
-        <Card bgColor="bg-yellow-500" type="In process" taskCount={tasksStatus.inProcess}>
+        <Card
+          onClick={() => navigate("/inprocess")}
+          bgColor="bg-yellow-500"
+          type="In process"
+          taskCount={tasksStatus.inProcess}>
           <FaRegClock size={20} color="white" />
         </Card>
-        <Card bgColor="bg-teal-500" type="Completed" taskCount={tasksStatus.completed}>
+        <Card
+          onClick={() => navigate("/completed")}
+          bgColor="bg-teal-500"
+          type="Completed"
+          taskCount={tasksStatus.completed}>
           <LuFileCheck size={20} color="white" />
         </Card>
-        <Card bgColor="bg-red-400" type="Canceled" taskCount={tasksStatus.canceled}>
+        <Card
+          onClick={() => navigate("/canceled")}
+          bgColor="bg-red-400"
+          type="Canceled"
+          taskCount={tasksStatus.canceled}>
           <LuFileX size={20} color="white" />
         </Card>
       </div>
@@ -74,7 +90,6 @@ const Home = () => {
           {dataTasksKeys &&
             dataTasksKeys.map((key) => {
               const task = data[key];
-
               return (
                 <Task
                   key={key}

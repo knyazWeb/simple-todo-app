@@ -3,7 +3,8 @@ import { GoPlus } from "react-icons/go";
 import ButtonMenu from "../ui/Buttons/ButtonMenu/ButtonMenu.tsx";
 import { useLocation, useNavigate } from "react-router-dom";
 import { CiCalendar } from "react-icons/ci";
-import { LuFileCheck } from "react-icons/lu";
+import { BsFileEarmarkCheck } from "react-icons/bs";
+
 
 import { IoPersonOutline } from "react-icons/io5";
 
@@ -23,13 +24,11 @@ const MenuPanel = () => {
           disabled={currentLocation.pathname === "/"}>
           <GoHome size={25} />
         </ButtonMenu>
-
-        {/*TODO: название table под вопросом*/}
         <ButtonMenu
-          onClick={() => navigate("/table")}
+          onClick={() => navigate("/calendar")}
           type="button"
           title="Table"
-          disabled={currentLocation.pathname === "/table"}>
+          disabled={currentLocation.pathname === "/calendar"}>
           <CiCalendar size={25} />
         </ButtonMenu>
         <ButtonMenu
@@ -46,7 +45,7 @@ const MenuPanel = () => {
           type="button"
           title="Tasks"
           disabled={currentLocation.pathname === "/completed"}>
-          <LuFileCheck size={25} />
+          <BsFileEarmarkCheck size={25} />
         </ButtonMenu>
         <ButtonMenu
           onClick={() => navigate("/profile")}

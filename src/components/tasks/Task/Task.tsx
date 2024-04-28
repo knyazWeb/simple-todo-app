@@ -6,12 +6,11 @@ import { useChangeTaskMutation, useRemoveTaskMutation } from "../../../services/
 import { selectUser } from "../../../store/reducers/authSlice.ts";
 import { ITask } from "../../../store/types/store.types.ts";
 import DropdownMenu from "../../dropdownMenu/DropdownMenu.tsx";
+import ModalEditing from "../../modals/modalEditing/ModalEditing.tsx";
+import ButtonDone from "../../ui/Buttons/ButtonDone/ButtonDone.tsx";
 import DateTag from "../../ui/Tags/DateTag/DateTag.tsx";
 import StatusTag from "../../ui/Tags/StatusTag/StatusTag.tsx";
 import css from "./Task.module.scss";
-import ButtonDone from "../../ui/Buttons/ButtonDone/ButtonDone.tsx";
-import ModalEditing from "../../modalEditing/ModalEditing.tsx";
-import { set } from "react-hook-form";
 
 type TaskProps = {
   id: string;
@@ -19,16 +18,17 @@ type TaskProps = {
   description: string;
   date: string;
   status: ITask["status"];
+  bgColor?: string;
 };
 
-const Task = ({ id, title, description, date, status }: TaskProps) => {
-  const [removeTask, { isLoading: removeIsLoading, isSuccess: removeIsSuccess }] =
-    useRemoveTaskMutation();
-  const [changeTask, { isLoading: changeIsLoading, isSuccess: changeIsSuccess }] =
-    useChangeTaskMutation();
+const Task = ({ id, title, description, date, status, bgColor }: TaskProps) => {
+  const [removeTask, { isLoading: removeIsLoading, isSuccess: removeIsSuccess }] = useRemoveTaskMutation();
+  const [changeTask, { isLoading: changeIsLoading, isSuccess: changeIsSuccess }] = useChangeTaskMutation();
   const [isModalActive, setIsModalActive] = useState(false);
   const { userId } = useAppSelector(selectUser);
   const [isDropdownActive, setIsDropdownActive] = useState(false);
+
+
   const tagDate = new Date(date).toLocaleDateString("en-GB", {
     month: "short",
     day: "numeric",
@@ -37,7 +37,7 @@ const Task = ({ id, title, description, date, status }: TaskProps) => {
     <>
       <div
         style={{ boxShadow: "0px 11px 4px -7px rgba(0, 0, 0, 1)" }}
-        className={`relative w-full flex flex-col bg-white border-black border rounded-md p-3 break-words shadow-black shadow overflow-hidden ${removeIsLoading ? css.delete : ""} ${removeIsSuccess ? "hidden" : ""}`}>
+        className={`relative w-full flex flex-col ${bgColor ? bgColor : 'bg-white'} border-black border rounded-md p-3 break-words shadow-black shadow overflow-hidden ${removeIsLoading ? css.delete : ""} ${removeIsSuccess ? "hidden" : ""}`}>
         <h2 className="text-lg leading-none mb-2 mr-6">{title}</h2>
         <p className="text-sm text-gray-600 mb-4 leading-none">{description}</p>
         <div className="flex flex-col justify-center items-start gap-1.5">
@@ -47,9 +47,7 @@ const Task = ({ id, title, description, date, status }: TaskProps) => {
         {(status === "In process" || status === "On going") && (
           <div className={`flex justify-center items-center absolute bottom-1.5 right-1.5 `}>
             <ButtonDone
-              onClick={() =>
-                changeTask({ userId, taskId: id, task: { status: "Completed" } as ITask })
-              }
+              onClick={() => changeTask({ userId, taskId: id, task: { status: "Completed" } as ITask })}
               status={status}
               isLoading={changeIsLoading}
               isSuccess={changeIsSuccess}
@@ -58,9 +56,7 @@ const Task = ({ id, title, description, date, status }: TaskProps) => {
         )}
 
         <div className="absolute top-1.5 right-1.5">
-          <DropdownMenu
-            isDropdownActive={isDropdownActive}
-            setIsDropdownActive={setIsDropdownActive}>
+          <DropdownMenu isDropdownActive={isDropdownActive} setIsDropdownActive={setIsDropdownActive}>
             <button
               onClick={() => {
                 setIsDropdownActive(false);
@@ -85,15 +81,18 @@ const Task = ({ id, title, description, date, status }: TaskProps) => {
           </DropdownMenu>
         </div>
       </div>
-      {isModalActive && <ModalEditing
-        isOpen={isModalActive}
-        setIsOpen={setIsModalActive}
-        mainTitle="Edit task"
-        taskId={id}
-        title={title}
-        description={description}
-        date={date}
-        status={status} />}
+      {isModalActive && (
+        <ModalEditing
+          isOpen={isModalActive}
+          setIsOpen={setIsModalActive}
+          mainTitle="Edit task"
+          taskId={id}
+          title={title}
+          description={description}
+          date={date}
+          status={status}
+        />
+      )}
     </>
   );
 };
