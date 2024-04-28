@@ -11,6 +11,7 @@ import ButtonMain from "../../ui/Buttons/ButtonMain/ButtonMain";
 import CustomInput from "../../ui/CustomInput/CustomInput.tsx";
 import Textarea from "../../ui/Textarea/Textarea";
 import { regDate } from "../regDate.ts";
+import { formatLocalDate } from "../../helpers/formatLocalDate.ts";
 
 const NewTaskForm = () => {
   const navigate = useNavigate();
@@ -25,14 +26,14 @@ const NewTaskForm = () => {
     formState: { errors },
   } = useForm<ITask>({
     defaultValues: {
-      date: new Date().toISOString().split("T")[0],
+      date: formatLocalDate(new Date()),
       status: "On going",
     },
   });
   const selectedOption = watch("status");
 
   const submit: SubmitHandler<ITask> = async (data) => {
-    const date = new Date(data.date).toISOString().split("T")[0];
+    const date = formatLocalDate(new Date(data.date))
     const newTask: ITask = {
       date,
       title: data.title,

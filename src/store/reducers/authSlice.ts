@@ -41,7 +41,6 @@ const authSlice = createSlice({
           state.isAuth = true;
           state.userId = action.payload.users[0].localId;
         }
-        console.log(action.payload.users[0].displayName);
       });
     builder.addMatcher(authApi.endpoints.signIn.matchFulfilled, (_state, action) => {
       if (action.payload.idToken && action.payload.refreshToken) {

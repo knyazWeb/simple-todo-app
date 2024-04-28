@@ -12,6 +12,7 @@ import ButtonMain from "../../ui/Buttons/ButtonMain/ButtonMain";
 import CustomInput from "../../ui/CustomInput/CustomInput";
 import Textarea from "../../ui/Textarea/Textarea";
 import css from "./ModalEditing.module.scss";
+import { formatLocalDate } from "../../helpers/formatLocalDate";
 
 type ModalEditingProps = {
   isOpen: boolean;
@@ -42,18 +43,22 @@ const ModalEditing = ({
     watch,
     control,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm<ITask>({
     defaultValues: {
       title: title,
-      date: new Date(date).toISOString().split("T")[0],
+      date: formatLocalDate(new Date(date)),
       description: description,
       status: status,
     },
   });
   const selectedOption = watch("status");
   const submit: SubmitHandler<ITask> = async (data) => {
-    const date = new Date(`${data.date}`).toISOString().split("T")[0];
+    if (!isDirty) {
+      setIsOpen(false);
+      return;
+    }
+    const date = formatLocalDate(new Date(`${data.date}`));
     const changedTask = {
       date,
       title: data.title,
