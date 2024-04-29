@@ -10,9 +10,9 @@ Live Demo - [Simple ToDo App](https://simple-todo-knyazweb.vercel.app)
 * ${\textsf{\color{Purple}RTK Query}}$
 * ${\textsf{\color{Melon}Vite}}$
 * ${\textsf{\color{Dandelion}Firebase Realtime Database}}$
-* ${\textsf{\color{Mahogany}React Router Dom}}$
+* ${\textsf{\color{Bittersweet}React Router Dom}}$
 * ${\textsf{\color{OrangeRed}React Hook Form}}$
-* ${\textsf{\color{White}React Transition Group}}$
+* ${\textsf{\color{YellowGreen}React Transition Group}}$
 * ${\textsf{\color{SkyBlue}Tailwind CSS}}$
 * ${\textsf{\color{RubineRed}SCSS}}$
 
@@ -31,28 +31,26 @@ Live Demo - [Simple ToDo App](https://simple-todo-knyazweb.vercel.app)
 <h2>Screenshots of the Project 📸</h2>
 <h3 align='left'>Registration Page</h3>
 <div align='left'>
-<img width="328" alt="Screenshot 2024-04-29 at 16 58 35" src="https://github.com/knyazWeb/simple-todo-app/assets/76859168/823e4755-46a8-4fa0-bace-81c360a2043e">
+<img width="328" alt="registration" src="https://github.com/knyazWeb/simple-todo-app/assets/76859168/a7db4cea-a911-4040-bc9c-deb84d823e85">
 </div>
 <h3 align='left'>Home Page</h3>
 <div align='left'>
-<img width="328" alt="Screenshot 2024-04-29 at 16 19 57" src="https://github.com/knyazWeb/simple-todo-app/assets/76859168/41c37707-435a-4500-9b6c-80e2490d7e0e">
+<img width="328" alt="home" src="https://github.com/knyazWeb/simple-todo-app/assets/76859168/aa1496cb-4fb8-4d6c-9e3d-4ecdea35f585">
 </div>
 <h3 align='left'>Calendar Page</h3>
 <div align='left'>
-<img width="328" alt="Screenshot 2024-04-29 at 16 25 02" src="https://github.com/knyazWeb/simple-todo-app/assets/76859168/79b4047c-7f77-4aa7-97df-cdebc1d93004">
+<img width="328" alt="calendar" src="https://github.com/knyazWeb/simple-todo-app/assets/76859168/ed4af4d2-c506-4b8f-817d-d7adda376d92">
 </div>
 <h3 align='left'>Profile Page</h3>
 <div align='left'>
-<img width="328" alt="Screenshot 2024-04-29 at 16 56 33" src="https://github.com/knyazWeb/simple-todo-app/assets/76859168/ca058acc-231d-41ef-9730-492c636e4351">
+<img width="328" alt="profile" src="https://github.com/knyazWeb/simple-todo-app/assets/76859168/6a111a01-1aab-4a85-9156-0f34769f0dc8">
 </div>
 <h3 align='left'>Create New Task Page</h3>
 <div align='left'>
-<img width="328" alt="Screenshot 2024-04-29 at 16 48 42" src="https://github.com/knyazWeb/simple-todo-app/assets/76859168/ddf94706-c80e-43a9-a443-835747d3eade">
+<img width="328" alt="newtask" src="https://github.com/knyazWeb/simple-todo-app/assets/76859168/3ac6b87a-8298-4d37-9827-847c9eaf4100">
 </div>
 <h3 align='left'>Edit task modal</h3>
 <div align='left'>
-<img width="328" alt="Screenshot 2024-04-29 at 16 49 08" src="https://github.com/knyazWeb/simple-todo-app/assets/76859168/12ef0cba-559a-4e5b-b605-acd25605f306">
+<img width="328" alt="modal" src="https://github.com/knyazWeb/simple-todo-app/assets/76859168/cdf0299d-9b5a-4d49-8c7e-0257d0c68435">
 </div>
-
-
 
