@@ -4,7 +4,7 @@ import { useAppDispatch } from "../../../hooks/redux";
 import { logout } from "../../../store/reducers/authSlice";
 import ButtonIcon from "../../ui/Buttons/ButtonIcon/ButtonIcon";
 import ButtonMain from "../../ui/Buttons/ButtonMain/ButtonMain";
-import css from './ModalConfirm.module.scss';
+import css from "./ModalConfirm.module.scss";
 
 type ModalConfirmProps = {
   isOpen: boolean;
@@ -17,7 +17,7 @@ const ModalConfirm = ({ isOpen, setIsOpen, mainTitle }: ModalConfirmProps) => {
   return (
     <Dialog open={isOpen} onClose={() => setIsOpen(false)}>
       <div className="fixed inset-0 bg-black/30" aria-hidden="true">
-      <div className="fixed inset-0 flex w-full items-center justify-center no-touch:pr-4">
+        <div className="fixed inset-0 flex w-full items-center justify-center no-touch:pr-4">
           <Dialog.Panel className={`${css.popup}`}>
             <div className="flex items-center justify-between mb-4">
               <Dialog.Title className="text-xl font-bold ">{mainTitle}</Dialog.Title>
@@ -27,14 +27,22 @@ const ModalConfirm = ({ isOpen, setIsOpen, mainTitle }: ModalConfirmProps) => {
             </div>
             <div>
               <div className="flex justify-between gap-5">
-                <ButtonMain onClick={() => {
-                  dispatch(logout());
-                }} sizePadding="px-6 py-2" type="button" disabled={false}>
+                <ButtonMain
+                  onClick={() => {
+                    dispatch(logout());
+                  }}
+                  sizePadding="px-6 py-2"
+                  type="button"
+                  disabled={false}>
                   Yes
                 </ButtonMain>
-                <ButtonMain onClick={() => {
-                  setIsOpen(false);
-                }} sizePadding="px-6 py-2" type="button" disabled={false}>
+                <ButtonMain
+                  onClick={() => {
+                    setIsOpen(false);
+                  }}
+                  sizePadding="px-6 py-2"
+                  type="button"
+                  disabled={false}>
                   No
                 </ButtonMain>
               </div>

@@ -5,7 +5,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { CiCalendar } from "react-icons/ci";
 import { BsFileEarmarkCheck } from "react-icons/bs";
 
-
 import { IoPersonOutline } from "react-icons/io5";
 
 import { GoHome } from "react-icons/go";
@@ -13,7 +12,8 @@ import { GoHome } from "react-icons/go";
 const MenuPanel = () => {
   const navigate = useNavigate();
   const currentLocation = useLocation();
-
+  const htmlPaddingRight = window.getComputedStyle(document.documentElement).getPropertyValue("padding-right");
+  
   return (
     <div className="fixed bottom-0 right-1/2 translate-x-1/2 w-full h-16 bg-white border-t border-black px-8">
       <div className="flex justify-between items-center h-full max-w-md mx-auto my-0 ">
