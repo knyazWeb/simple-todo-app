@@ -81,7 +81,7 @@ const Profile = () => {
         <ProfileCard IconSVG={AiOutlineSafetyCertificate} name="Security" />
         <ProfileCard IconSVG={CiGlobe} name="Language and Region" />
         <ProfileCard IconSVG={GoVerified} name="Go Premium" />
-        <ProfileCard IconSVG={BsQuestionOctagon} name="Help center" />
+        <ProfileCard IconSVG={BsQuestionOctagon} name="Help Center" />
         <ProfileCard IconSVG={IoExitOutline} name="Exit" onClick={() => setShowExitConfirm(true)} />
       </div>
       {showEditProfile && (

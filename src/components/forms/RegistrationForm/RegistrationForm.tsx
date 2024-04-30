@@ -18,7 +18,7 @@ const RegistrationForm = () => {
   const navigate = useNavigate();
   const [userName, setUserName] = useState("");
 
-  const [signUp, { data: responseData, isLoading, isSuccess }] = useSignUpMutation();
+  const [signUp, { data: responseData, isLoading, isSuccess, isError, error: errorData }] = useSignUpMutation();
   const [updateName, { isSuccess: updateIsSuccess }] = useUpdateNameMutation();
 
   useEffect(() => {
@@ -36,6 +36,7 @@ const RegistrationForm = () => {
   const {
     register,
     handleSubmit,
+    resetField,
     formState: { errors },
     clearErrors,
   } = useForm<RegistrationForm>({
@@ -48,14 +49,22 @@ const RegistrationForm = () => {
       password: data.password,
     };
     setUserName(data.name);
-    await signUp(user);
+    await signUp(user)
+      .unwrap()
+      .catch(() => {
+        resetField("email", { keepError: true });
+        resetField("password", { keepError: true });
+      });
   };
-  // @ts-ignore
-  const error: SubmitErrorHandler<RegistrationForm> = (data) => {};
+
+  const error: SubmitErrorHandler<RegistrationForm> = (data) => {
+    if (!data.checkbox) {
+      resetField("email", { keepError: true });
+      resetField("password", { keepError: true });
+    }
+  };
   return (
-    <form
-      onSubmit={handleSubmit(submit, error)}
-      className="flex justify-center items-start w-full gap-5 flex-col">
+    <form onSubmit={handleSubmit(submit, error)} className="flex justify-center items-start w-full gap-5 flex-col">
       <div className="w-full">
         <CustomInput
           type="text"
@@ -82,7 +91,7 @@ const RegistrationForm = () => {
             },
           })}
         />
-        {errors.email && <p className="mt- text-xs text-red-400">{errors.email.message}</p>}
+        {errors.email && <p className="mt-2 text-xs text-red-400">{errors.email.message}</p>}
       </div>
       <div className="w-full">
         <CustomInput
@@ -105,9 +114,16 @@ const RegistrationForm = () => {
         register={register("checkbox", { required: "Accept" })}>
         <span className="block text-sm cursor-pointer underline">I agree to privacy policy & terms</span>
       </Checkbox>
-      <ButtonMain className="mt-5" type="submit" disabled={false}>
-        {isLoading ? "Loading..." : "Sign up"}
-      </ButtonMain>
+      <div className="w-full">
+        <ButtonMain className="mt-5" type="submit" disabled={false}>
+          {isLoading ? "Loading..." : "Sign up"}
+        </ButtonMain>
+        {isError && (
+          <span className="block w-full mt-2 text-center text-xs text-red-400">
+            Error: {(errorData as any).data.error.message}
+          </span>
+        )}
+      </div>
     </form>
   );
 };

@@ -16,12 +16,13 @@ const LoginForm = () => {
   const {
     register,
     handleSubmit,
+    resetField,
     formState: { errors },
   } = useForm<LoginForm>({
     defaultValues: {},
   });
 
-  const [signIn, { data: responseData, isLoading, isSuccess }] = useSignInMutation();
+  const [signIn, { data: responseData, isLoading, isSuccess, isError, error }] = useSignInMutation();
 
   useEffect(() => {
     if (isSuccess && responseData) {
@@ -34,14 +35,16 @@ const LoginForm = () => {
       email: data.email,
       password: data.password,
     };
-    await signIn(user);
+    await signIn(user)
+      .unwrap()
+      .catch(() => {
+        resetField("password", { keepError: true });
+      });
   };
-  // @ts-ignore
-  const error: SubmitErrorHandler<RegistrationForm> = (data) => {};
 
   return (
-    <form onSubmit={handleSubmit(submit, error)} className="flex justify-center items-start w-full flex-col gap-5">
-      <div className='w-full'>
+    <form onSubmit={handleSubmit(submit)} className="flex justify-center items-start w-full flex-col gap-5">
+      <div className="w-full">
         <CustomInput
           type="text"
           placeholder="E-mail"
@@ -55,24 +58,30 @@ const LoginForm = () => {
         />
         {errors.email && <p className="mt-2 text-xs text-red-400">{errors.email.message}</p>}
       </div>
-      <div className='w-full'>
+      <div className="w-full">
         <CustomInput
           placeholder="Password"
           type="password"
           {...register("password", {
             required: "Create a password",
             minLength: {
-              value: 5,
-              message: "Minimum password length is 5",
+              value: 6,
+              message: "Minimum password length is 6",
             },
           })}
         />
         {errors.password && <p className="mt-2 text-xs text-red-400">{errors.password.message}</p>}
       </div>
-
-      <ButtonMain className="mt-5" type="submit" disabled={false}>
-        {isLoading ? "Loading..." : "Log in"}
-      </ButtonMain>
+      <div className="w-full">
+        <ButtonMain className="mt-5" type="submit" disabled={false}>
+          {isLoading ? "Loading..." : "Log in"}
+        </ButtonMain>
+        {isError && (
+          <span className="block w-full mt-2 text-center text-xs text-red-400">
+            Error: {(error as any).data.error.message}
+          </span>
+        )}
+      </div>
     </form>
   );
 };
