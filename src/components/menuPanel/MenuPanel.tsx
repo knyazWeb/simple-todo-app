@@ -8,14 +8,30 @@ import { BsFileEarmarkCheck } from "react-icons/bs";
 import { IoPersonOutline } from "react-icons/io5";
 
 import { GoHome } from "react-icons/go";
+import { useEffect, useState } from "react";
 
 const MenuPanel = () => {
   const navigate = useNavigate();
   const currentLocation = useLocation();
-  const htmlPaddingRight = window.getComputedStyle(document.documentElement).getPropertyValue("padding-right");
-  
+  const [htmlPaddingRight, setHtmlPaddingRight] = useState(0);
+
+  useEffect(() => {
+    const updatePaddingRight = () => {
+      const paddingRight = window.getComputedStyle(document.documentElement).getPropertyValue("padding-right");
+      setHtmlPaddingRight(parseInt(paddingRight, 10));
+    };
+
+    const observer = new MutationObserver(updatePaddingRight);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["style"] });
+
+    updatePaddingRight();
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
   return (
-    <div className="fixed bottom-0 right-1/2 translate-x-1/2 w-full h-16 bg-white border-t border-black px-8">
+    <div className={`fixed bottom-0 right-1/2 translate-x-1/2 w-full h-16 bg-white border-t border-black pl-8 ${htmlPaddingRight == 15 ? 'pr-[47px]' : 'pr-8' }`}>
       <div className="flex justify-between items-center h-full max-w-md mx-auto my-0 ">
         <ButtonMenu
           onClick={() => navigate("/")}
