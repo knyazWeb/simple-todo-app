@@ -49,7 +49,7 @@
 <div align='left'>
 <img width="328" alt="newtask" src="https://github.com/knyazWeb/simple-todo-app/assets/76859168/3ac6b87a-8298-4d37-9827-847c9eaf4100">
 </div>
-<h3 align='left'>Edit task modal</h3>
+<h3 align='left'>Edit Task Modal</h3>
 <div align='left'>
 <img width="328" alt="modal" src="https://github.com/knyazWeb/simple-todo-app/assets/76859168/cdf0299d-9b5a-4d49-8c7e-0257d0c68435">
 </div>
