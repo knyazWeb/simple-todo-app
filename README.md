@@ -1,8 +1,8 @@
-# Simple ToDo App
+# 📝 Simple ToDo App 
 
-Live Demo - [Simple ToDo App](https://simple-todo-knyazweb.vercel.app)
+#### ▶️ Live Demo - [Simple ToDo App](https://simple-todo-knyazweb.vercel.app)
 
-### Built with:
+### ⚙️ Built with:
 
 * ${\textsf{\color{Cyan}React}}$
 * ${\textsf{\color{RoyalBlue}Typescript}}$
@@ -18,7 +18,7 @@ Live Demo - [Simple ToDo App](https://simple-todo-knyazweb.vercel.app)
 
 
 
-### Features:
+### 💫 Features:
 
 * JWT Authorization
 * Realtime Database using REST API
@@ -28,7 +28,7 @@ Live Demo - [Simple ToDo App](https://simple-todo-knyazweb.vercel.app)
 * Four pages for each task status
 * Profile page with name editing
 
-<h2>Screenshots of the Project 📸</h2>
+<h2> 📸 Screenshots of the Project</h2>
 <h3 align='left'>Registration Page</h3>
 <div align='left'>
 <img width="328" alt="registration" src="https://github.com/knyazWeb/simple-todo-app/assets/76859168/a7db4cea-a911-4040-bc9c-deb84d823e85">
